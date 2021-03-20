@@ -34,14 +34,17 @@ public abstract class ItemBase {
         this.item = item;
         this.parent = this;
         item.setUserData(this);
+        // select
         item.setOnMousePressed((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMousePressed(e, editor));
         item.setOnMouseDragged((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseDraging(e, editor));
+        // draw
         item.setOnDragDetected((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragStart(e, editor));
         item.setOnMouseDragOver((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseDraging(e, editor));
-        item.setOnMouseDragReleased((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragEnd(e, editor));
-        item.setOnMouseReleased((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseReleased(e, editor));
         item.setOnMouseDragExited(
                 (e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseDragExit(e, editor));
+        item.setOnMouseReleased((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseReleased(e, editor));
+        item.setOnMouseDragReleased((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragEnd(e, editor));
+
         item.setLayoutX(x);
         item.setLayoutY(y);
     }

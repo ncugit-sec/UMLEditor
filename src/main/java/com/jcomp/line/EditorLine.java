@@ -16,7 +16,18 @@ public class EditorLine {
     protected Line line = new Line();
     Rotate rotate = new Rotate();
 
-    public EditorLine(ItemBase src, int srcDir, Shape head, UMLEditor editor, double halfWidth, double x, double y) {
+    /**
+     * constructor for destination as a point
+     * @param src
+     * @param srcDir
+     * @param head shape of head
+     * @param editor
+     * @param halfWidth half of width of head
+     * @param x
+     * @param y
+     */
+    
+     public EditorLine(ItemBase src, int srcDir, Shape head, UMLEditor editor, double halfWidth, double x, double y) {
         this.src = src;
         this.srcDir = srcDir;
         this.halfWidth = halfWidth;
@@ -29,6 +40,9 @@ public class EditorLine {
         draw(x, y, editor);
     }
 
+    /** 
+     * constructor for destination as a baseitem
+     * */ 
     private EditorLine(ItemBase src, int srcDir, Shape head, UMLEditor editor, double halfWidth,
             Pair<Double, Double> to) {
         this(src, srcDir, head, editor, halfWidth, to.getKey(), to.getValue());
@@ -41,17 +55,31 @@ public class EditorLine {
         this.dstDir = dstDir;
     }
 
+    /**
+     * draw for constructor
+     * @param x
+     * @param y
+     * @param editor
+     */
     private void draw(double x, double y, UMLEditor editor) {
         editor.addItemToCanvas(line);
         editor.addItemToCanvas(head);
         updatePos(x, y);
     }
 
+    /**
+     * update for destination as a node
+     */
     public void updatePos() {
         Pair<Double, Double> to = dst.getPointbyPort(dstDir);
         updatePos(to.getKey(), to.getValue());
     }
 
+    /**
+     * update for destination as a point
+     * @param x
+     * @param y
+     */
     public void updatePos(double x, double y) {
         Pair<Double, Double> from = src.getPointbyPort(srcDir);
         line.setStartX(from.getKey());
@@ -63,6 +91,10 @@ public class EditorLine {
         rotate.setAngle(Math.atan2(y - from.getValue(), x - from.getKey()) / Math.PI * 180 + 90);
     }
 
+    /**
+     * remove from canvas
+     * @param editor
+     */
     public void remove(UMLEditor editor) {
         editor.removeItemFromCanvas(line);
         editor.removeItemFromCanvas(head);
