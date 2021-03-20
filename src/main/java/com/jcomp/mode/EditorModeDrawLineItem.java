@@ -6,11 +6,7 @@ import com.jcomp.item.ItemBase;
 import com.jcomp.line.EditorLine;
 
 import javafx.scene.Node;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
@@ -22,43 +18,64 @@ public class EditorModeDrawLineItem extends EditorMode {
         this.targetType = EditorModeTargetType.Item;
     }
 
+    private ItemBase dragSrc;
+    private int dragStartPort;
+    private EditorLine drawingLine;
+
+    final private double width = 12.0;
+    final private double halfWidth = width / 2;
+
     @Override
     public void handleDragStart(MouseEvent e, UMLEditor editor) {
-        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData()).getParent();
+        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData());
         if (b.isGroup())
             return;
-        Dragboard db = b.getItem().startDragAndDrop(TransferMode.ANY);
-        /* Put a string on a dragboard */
-        ClipboardContent content = new ClipboardContent();
-        content.putString(b.getDragItemDirection(e.getX(), e.getY()) + "," + editor.getItemIndex(b));
-        db.setContent(content);
+        dragSrc = b;
+        b.getItem().startFullDrag();
+        dragStartPort = b.getDragItemDirection(e.getX(), e.getY());
+        drawingLine = new EditorLine(b, dragStartPort, getShape(), editor, halfWidth,
+                e.getX() + b.getItem().getLayoutX(), e.getY() + b.getItem().getLayoutY());
     }
 
     @Override
-    public void handleDragOver(DragEvent e, UMLEditor editor) {
-        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData()).getParent();
-        if (b.isGroup())
+    public void handleMouseDraging(MouseEvent e, UMLEditor editor) {
+        if (drawingLine == null)
             return;
-        if (e.getGestureSource() != b.getItem()) {
-            e.acceptTransferModes(TransferMode.ANY);
-        }
+        Node n = (Node) e.getSource();
+        ItemBase b = (ItemBase) n.getUserData();
+        if(b != dragSrc && !b.isGroup())
+            ((ItemBase) n.getUserData()).addCorner(editor, e.getX(), e.getY());
+        drawingLine.updatePos(e.getX() + n.getLayoutX(), e.getY() + n.getLayoutY());
     }
 
     @Override
-    public void handleDragEnd(DragEvent e, UMLEditor editor) {
-        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData()).getParent();
-        if (b.isGroup())
+    public void handleMouseReleased(MouseEvent e, UMLEditor editor) {
+        if (drawingLine == null)
             return;
-        String content[] = e.getDragboard().getString().split(",");
+        drawingLine.remove(editor);
+        drawingLine = null;
+    }
 
-        ItemBase src = editor.getItem(Integer.valueOf(content[1]));
-        int srcDir = Integer.valueOf(content[0]);
+    public void handleMouseDragExit(MouseEvent e, UMLEditor editor) {
+        ((ItemBase)((Node) e.getSource()).getUserData()).removeCorner(editor);
+    }
+
+    @Override
+    public void handleDragEnd(MouseEvent e, UMLEditor editor) {
+        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData());
+        if (b.isGroup() || dragSrc == b)
+            return;
+        ItemBase src = dragSrc;
+        int srcDir = dragStartPort;
         ItemBase dst = b;
         int dstDir = b.getDragItemDirection(e.getX(), e.getY());
 
-        double width = 12.0;
-        double halfWidth = width / 2;
-        Double d[] = null;
+        dst.addLine(src.addLine(new EditorLine(src, srcDir, dst, dstDir, getShape(), editor, halfWidth)));
+        e.consume();
+    }
+
+    private Shape getShape() {
+        Double d[];
         Shape shape = null;
         if (type == EditorButtonType.GENERALIZATION) {
             Polygon p = new Polygon();
@@ -80,7 +97,6 @@ public class EditorModeDrawLineItem extends EditorMode {
             shape.setFill(Color.TRANSPARENT);
         }
         shape.setStroke(Color.BLACK);
-        dst.addLine(src.addLine(new EditorLine(src, srcDir, dst, dstDir, shape, editor, halfWidth)));
-        e.consume();
+        return shape;
     }
 }

@@ -16,37 +16,55 @@ public class EditorLine {
     protected Line line = new Line();
     Rotate rotate = new Rotate();
 
-    protected EditorLine(ItemBase src, int srcDir, UMLEditor editor, double halfWidth) {
+    public EditorLine(ItemBase src, int srcDir, Shape head, UMLEditor editor, double halfWidth, double x, double y) {
         this.src = src;
-        this.srcDir =  srcDir;
+        this.srcDir = srcDir;
         this.halfWidth = halfWidth;
-        rotate.setPivotX(halfWidth);
-        rotate.setPivotY(0);
-        
-    }
-    
-    public EditorLine(ItemBase src, int srcDir, ItemBase dst, int dstDir, Shape head, UMLEditor editor, double halfWidth) {
-        this(src, srcDir, editor, halfWidth);
-        this.dst = dst;
-        this.dstDir = dstDir;
         this.head = head;
         head.getTransforms().add(rotate);
-        
-        updatePos();
+        rotate.setPivotX(halfWidth);
+        rotate.setPivotY(0);
+        head.setMouseTransparent(true);
+        line.setMouseTransparent(true);
+        draw(x, y, editor);
+    }
 
+    private EditorLine(ItemBase src, int srcDir, Shape head, UMLEditor editor, double halfWidth,
+            Pair<Double, Double> to) {
+        this(src, srcDir, head, editor, halfWidth, to.getKey(), to.getValue());
+    }
+
+    public EditorLine(ItemBase src, int srcDir, ItemBase dst, int dstDir, Shape head, UMLEditor editor,
+            double halfWidth) {
+        this(src, srcDir, head, editor, halfWidth, dst.getPointbyPort(dstDir));
+        this.dst = dst;
+        this.dstDir = dstDir;
+    }
+
+    private void draw(double x, double y, UMLEditor editor) {
         editor.addItemToCanvas(line);
         editor.addItemToCanvas(head);
+        updatePos(x, y);
     }
 
     public void updatePos() {
-        Pair<Double, Double> from = src.getPointbyPort(srcDir);
         Pair<Double, Double> to = dst.getPointbyPort(dstDir);
+        updatePos(to.getKey(), to.getValue());
+    }
+
+    public void updatePos(double x, double y) {
+        Pair<Double, Double> from = src.getPointbyPort(srcDir);
         line.setStartX(from.getKey());
         line.setStartY(from.getValue());
-        line.setEndX(to.getKey());
-        line.setEndY(to.getValue());
-        head.setLayoutX(to.getKey() - halfWidth);
-        head.setLayoutY(to.getValue());
-        rotate.setAngle(Math.atan2(to.getValue() - from.getValue(), to.getKey() - from.getKey()) / Math.PI * 180 + 90);
+        line.setEndX(x);
+        line.setEndY(y);
+        head.setLayoutX(x - halfWidth);
+        head.setLayoutY(y);
+        rotate.setAngle(Math.atan2(y - from.getValue(), x - from.getKey()) / Math.PI * 180 + 90);
+    }
+
+    public void remove(UMLEditor editor) {
+        editor.removeItemFromCanvas(line);
+        editor.removeItemFromCanvas(head);
     }
 }

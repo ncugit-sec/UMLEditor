@@ -37,8 +37,11 @@ public abstract class ItemBase {
         item.setOnMousePressed((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMousePressed(e, editor));
         item.setOnMouseDragged((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseDraging(e, editor));
         item.setOnDragDetected((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragStart(e, editor));
-        item.setOnDragOver((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragOver(e, editor));
-        item.setOnDragDropped((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragEnd(e, editor));
+        item.setOnMouseDragOver((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseDraging(e, editor));
+        item.setOnMouseDragReleased((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragEnd(e, editor));
+        item.setOnMouseReleased((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseReleased(e, editor));
+        item.setOnMouseDragExited(
+                (e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseDragExit(e, editor));
         item.setLayoutX(x);
         item.setLayoutY(y);
     }
@@ -156,6 +159,7 @@ public abstract class ItemBase {
 
     /**
      * Check if item is contained in the bounded selection
+     * 
      * @param box bounding box
      * @return boolean
      */
@@ -165,6 +169,7 @@ public abstract class ItemBase {
 
     /**
      * get rectangle with default width and height
+     * 
      * @param x
      * @param y
      * @return Rectangle
@@ -213,6 +218,25 @@ public abstract class ItemBase {
         }
     }
 
+    public void addCorner(UMLEditor editor, double x, double y) {
+        removeCorner(editor);
+        initX = item.getLayoutX();
+        initY = item.getLayoutY();
+        initWidth = item.getWidth();
+        double width = item.getWidth(), height = item.getHeight();
+        int port = getDragItemDirection(x, y);
+        if (port == 3)
+            corners.add(getRectangleWithSize(initX + (width - CORNER_SIZE) / 2, initY - CORNER_SIZE));
+        else if (port == 1)
+            corners.add(getRectangleWithSize(initX + (width - CORNER_SIZE) / 2, initY + height));
+        else if (port == 0)
+            corners.add(getRectangleWithSize(initX - CORNER_SIZE, initY + (height - CORNER_SIZE) / 2));
+        else
+            corners.add(getRectangleWithSize(initX + width, initY + (height - CORNER_SIZE) / 2));
+        editor.addItemToCanvas(corners);
+
+    }
+
     /**
      * remove Corner from canvas
      * 
@@ -229,6 +253,7 @@ public abstract class ItemBase {
 
     /**
      * add Drawn line to Canvas
+     * 
      * @param line
      * @return EditorLine
      */
@@ -239,11 +264,14 @@ public abstract class ItemBase {
     }
 
     public boolean isGroup() {
-        return false;
+        if (parent == this)
+            return false;
+        return parent.isGroup();
     }
 
     /**
      * Un do group For {@link ItemGroup}
+     * 
      * @param editor
      */
     public void unGroup(UMLEditor editor) {
@@ -264,6 +292,7 @@ public abstract class ItemBase {
 
     /**
      * Update by setting new position
+     * 
      * @param x
      * @param y
      */

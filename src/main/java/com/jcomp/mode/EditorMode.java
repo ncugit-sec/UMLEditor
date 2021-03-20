@@ -2,7 +2,6 @@ package com.jcomp.mode;
 
 import com.jcomp.UMLEditor;
 
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
 public class EditorMode {
@@ -30,15 +29,15 @@ public class EditorMode {
         return;
     }
 
-    public void handleDragOver(DragEvent e, UMLEditor editor) {
-        return;
-    }
-
-    public void handleDragEnd(DragEvent e, UMLEditor editor) {
-        return;
-    }
-
     public void handleMouseDraging(MouseEvent e, UMLEditor editor) {
+        return;
+    }
+
+    public void handleDragEnd(MouseEvent e, UMLEditor editor) {
+        return;
+    }
+
+    public void handleMouseDragExit(MouseEvent e, UMLEditor editor) {
         return;
     }
 
