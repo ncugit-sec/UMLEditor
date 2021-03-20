@@ -1,5 +1,7 @@
 package com.jcomp.button;
 
+import java.util.ArrayList;
+
 import com.jcomp.UMLEditor;
 import com.jcomp.mode.EditorMode;
 
@@ -21,7 +23,7 @@ public class EditorButton extends Button {
      * @param editor
      * @param iconType
      */
-    public EditorButton(int type, UMLEditor editor, EditorMode mode) {
+    public EditorButton(int type, UMLEditor editor, EditorMode... modes) {
         super("");
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -31,8 +33,14 @@ public class EditorButton extends Button {
             }
         });
         setGraphic(getIcon(type));
-        this.mode = mode;
-        mode.setType(type);
+        for (EditorMode e : modes) {
+            if (e != null) {
+                while (mode.size() < e.getTargetType() + 1)
+                    mode.add(null);
+                e.setType(type);
+                mode.set(e.getTargetType(), e);
+            }
+        }
     }
 
     public void unclick() {
@@ -102,15 +110,17 @@ public class EditorButton extends Button {
         return new ImageView(im);
     }
 
-    
-    /** 
+    /**
      * Retreive mode holder of the button
+     * 
      * @return EditorMode
      */
-    public EditorMode getMode() {
-        return mode;
+    public EditorMode getMode(int type) {
+        if (type >= mode.size())
+            return null;
+        return mode.get(type);
     }
 
-    protected EditorMode mode;
+    protected ArrayList<EditorMode> mode = new ArrayList<>();
     final static protected int ICON_WIDTH = 50;
 }

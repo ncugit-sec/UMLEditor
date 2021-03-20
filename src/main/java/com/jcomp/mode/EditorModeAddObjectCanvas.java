@@ -8,10 +8,13 @@ import com.jcomp.item.ItemUseCase;
 
 import javafx.scene.input.MouseEvent;
 
-public class EditorModeAddObject extends EditorMode {
-    /* canvas handler start */
+public class EditorModeAddObjectCanvas extends EditorMode {
+    public EditorModeAddObjectCanvas() {
+        this.targetType = EditorModeTargetType.CANVAS;
+    }
+
     @Override
-    public void handleCanvasClick(MouseEvent e, UMLEditor editor) {
+    public void handleMouseClick(MouseEvent e, UMLEditor editor) {
         ItemBase item = null;
         if (type == EditorButtonType.CLASS)
             item = new ItemClass(editor, e.getX(), e.getY());
@@ -20,6 +23,4 @@ public class EditorModeAddObject extends EditorMode {
         editor.addItemToBoth(item);
         e.consume();
     }
-
-    /* canvas handler end */
 }

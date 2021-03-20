@@ -5,6 +5,7 @@ import com.jcomp.button.EditorButtonType;
 import com.jcomp.item.ItemBase;
 import com.jcomp.line.EditorLine;
 
+import javafx.scene.Node;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -15,10 +16,15 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
 
-public class EditorModeDrawLine extends EditorMode {
-    /* Item handler start */
+public class EditorModeDrawLineItem extends EditorMode {
+
+    public EditorModeDrawLineItem() {
+        this.targetType = EditorModeTargetType.Item;
+    }
+
     @Override
-    public void handleItemDragStart(MouseEvent e, ItemBase b, UMLEditor editor) {
+    public void handleDragStart(MouseEvent e, UMLEditor editor) {
+        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData()).getParent();
         if (b.isGroup())
             return;
         Dragboard db = b.getItem().startDragAndDrop(TransferMode.ANY);
@@ -29,7 +35,8 @@ public class EditorModeDrawLine extends EditorMode {
     }
 
     @Override
-    public void handleItemDragOver(DragEvent e, ItemBase b, UMLEditor editor) {
+    public void handleDragOver(DragEvent e, UMLEditor editor) {
+        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData()).getParent();
         if (b.isGroup())
             return;
         if (e.getGestureSource() != b.getItem()) {
@@ -38,7 +45,8 @@ public class EditorModeDrawLine extends EditorMode {
     }
 
     @Override
-    public void handleItemDragEnd(DragEvent e, ItemBase b, UMLEditor editor) {
+    public void handleDragEnd(DragEvent e, UMLEditor editor) {
+        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData()).getParent();
         if (b.isGroup())
             return;
         String content[] = e.getDragboard().getString().split(",");
@@ -75,6 +83,4 @@ public class EditorModeDrawLine extends EditorMode {
         dst.addLine(src.addLine(new EditorLine(src, srcDir, dst, dstDir, shape, editor, halfWidth)));
         e.consume();
     }
-
-    /* Item handler end */
 }

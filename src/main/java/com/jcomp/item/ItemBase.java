@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.jcomp.UMLEditor;
 import com.jcomp.line.EditorLine;
+import com.jcomp.mode.EditorMode.EditorModeTargetType;
 
 import javafx.application.Platform;
 import javafx.geometry.BoundingBox;
@@ -32,11 +33,12 @@ public abstract class ItemBase {
     public ItemBase(Pane item, UMLEditor editor, double x, double y) {
         this.item = item;
         this.parent = this;
-        item.setOnMousePressed((e) -> editor.getEditorMode().handleItemMousePressed(e, parent, editor));
-        item.setOnMouseDragged((e) -> editor.getEditorMode().handleItemMouseDrag(e, parent, editor));
-        item.setOnDragDetected((e) -> editor.getEditorMode().handleItemDragStart(e, parent, editor));
-        item.setOnDragOver((e) -> editor.getEditorMode().handleItemDragOver(e, parent, editor));
-        item.setOnDragDropped((e) -> editor.getEditorMode().handleItemDragEnd(e, parent, editor));
+        item.setUserData(this);
+        item.setOnMousePressed((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMousePressed(e, editor));
+        item.setOnMouseDragged((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseDraging(e, editor));
+        item.setOnDragDetected((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragStart(e, editor));
+        item.setOnDragOver((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragOver(e, editor));
+        item.setOnDragDropped((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragEnd(e, editor));
         item.setLayoutX(x);
         item.setLayoutY(y);
     }
@@ -53,6 +55,15 @@ public abstract class ItemBase {
      */
     public void setParent(ItemBase parent) {
         this.parent = parent;
+    }
+
+    /**
+     * get Object parent
+     * 
+     * @return ItemBase
+     */
+    public ItemBase getParent() {
+        return parent;
     }
 
     /**
@@ -261,5 +272,4 @@ public abstract class ItemBase {
         item.setLayoutY(startY + y);
         Platform.runLater(() -> update());
     }
-
 }

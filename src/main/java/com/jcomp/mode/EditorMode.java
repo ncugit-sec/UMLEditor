@@ -1,60 +1,56 @@
 package com.jcomp.mode;
 
 import com.jcomp.UMLEditor;
-import com.jcomp.item.ItemBase;
 
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
 public class EditorMode {
+    public EditorMode() {
+        this.targetType = -1;
+    }
+
     public void setType(int type) {
         this.type = type;
     }
 
-    /* Item handler start */
-    public void handleItemMousePressed(MouseEvent e, ItemBase b, UMLEditor editor) {
+    public int getTargetType() {
+        return targetType;
+    }
+
+    public void handleMousePressed(MouseEvent e, UMLEditor editor) {
         return;
     }
 
-    public void handleItemDragStart(MouseEvent e, ItemBase b, UMLEditor editor) {
+    public void handleMouseClick(MouseEvent e, UMLEditor editor) {
         return;
     }
 
-    public void handleItemDragOver(DragEvent e, ItemBase b, UMLEditor editor) {
+    public void handleDragStart(MouseEvent e, UMLEditor editor) {
         return;
     }
 
-    public void handleItemDragEnd(DragEvent e, ItemBase b, UMLEditor editor) {
+    public void handleDragOver(DragEvent e, UMLEditor editor) {
         return;
     }
 
-    public void handleItemMouseDrag(MouseEvent e, ItemBase b, UMLEditor editor) {
+    public void handleDragEnd(DragEvent e, UMLEditor editor) {
         return;
     }
 
-    /* Item handler end */
-    /* canvas handler start */
-
-    public void handleCanvasMousePressed(MouseEvent e, UMLEditor editor) {
+    public void handleMouseDraging(MouseEvent e, UMLEditor editor) {
         return;
     }
 
-    public void handleCanvasClick(MouseEvent e, UMLEditor editor) {
+    public void handleMouseReleased(MouseEvent e, UMLEditor editor) {
         return;
     }
 
-    public void handleCanvasDragStart(MouseEvent e, UMLEditor editor) {
-        return;
-    }
-
-    public void handleCanvasMouseDrag(MouseEvent e, UMLEditor editor) {
-        return;
-    }
-
-    public void handleCanvasMouseReleased(MouseEvent e, UMLEditor editor) {
-        return;
-    }
-
-    /* canvas handler end */
     protected int type;
+    protected int targetType;
+
+    public final static class EditorModeTargetType {
+        public static final int CANVAS = 0;
+        public static final int Item = 1;
+    }
 }

@@ -8,9 +8,11 @@ import com.jcomp.button.EditorButtonType;
 import com.jcomp.item.ItemBase;
 import com.jcomp.item.ItemGroup;
 import com.jcomp.mode.EditorMode;
-import com.jcomp.mode.EditorModeAddObject;
-import com.jcomp.mode.EditorModeDrawLine;
-import com.jcomp.mode.EditorModeSelect;
+import com.jcomp.mode.EditorModeAddObjectCanvas;
+import com.jcomp.mode.EditorModeDrawLineItem;
+import com.jcomp.mode.EditorModeSelectCanvas;
+import com.jcomp.mode.EditorModeSelectItem;
+import com.jcomp.mode.EditorMode.EditorModeTargetType;
 
 import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
@@ -24,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 /**
@@ -86,12 +89,13 @@ public class UMLEditor {
     private void initBtn(BorderPane root) {
         VBox btnBox = new VBox();
         Vector<Button> btns = new Vector<Button>();
-        btns.add(new EditorButton(EditorButtonType.SELECT, UMLEditor.this, new EditorModeSelect()));
-        btns.add(new EditorButton(EditorButtonType.ASSOCIATION, UMLEditor.this, new EditorModeDrawLine()));
-        btns.add(new EditorButton(EditorButtonType.GENERALIZATION, UMLEditor.this, new EditorModeDrawLine()));
-        btns.add(new EditorButton(EditorButtonType.COMPOSITION, UMLEditor.this, new EditorModeDrawLine()));
-        btns.add(new EditorButton(EditorButtonType.CLASS, UMLEditor.this, new EditorModeAddObject()));
-        btns.add(new EditorButton(EditorButtonType.USE_CASE, UMLEditor.this, new EditorModeAddObject()));
+        btns.add(new EditorButton(EditorButtonType.SELECT, UMLEditor.this, new EditorModeSelectItem(),
+                new EditorModeSelectCanvas()));
+        btns.add(new EditorButton(EditorButtonType.ASSOCIATION, UMLEditor.this, new EditorModeDrawLineItem()));
+        btns.add(new EditorButton(EditorButtonType.GENERALIZATION, UMLEditor.this, new EditorModeDrawLineItem()));
+        btns.add(new EditorButton(EditorButtonType.COMPOSITION, UMLEditor.this, new EditorModeDrawLineItem()));
+        btns.add(new EditorButton(EditorButtonType.CLASS, UMLEditor.this, new EditorModeAddObjectCanvas()));
+        btns.add(new EditorButton(EditorButtonType.USE_CASE, UMLEditor.this, new EditorModeAddObjectCanvas()));
         btnBox.getChildren().addAll(btns);
         root.setLeft(btnBox);
     }
@@ -102,17 +106,22 @@ public class UMLEditor {
      * @param root
      */
     private void initCanvas(BorderPane root) {
-        // TODO
         canvas = new Pane();
+        Rectangle r = new Rectangle(200,200);
+        r.widthProperty().bind(root.widthProperty());
+        r.heightProperty().bind(root.heightProperty());
+        canvas.setClip(r);
         canvas.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
         // add item
-        canvas.setOnMouseClicked((e) -> selectedMode.handleCanvasClick(e, UMLEditor.this));
-        canvas.setOnDragDetected((e) -> selectedMode.handleCanvasDragStart(e, UMLEditor.this));
-        canvas.setOnMouseReleased((e) -> selectedMode.handleCanvasMouseReleased(e, UMLEditor.this));
+        canvas.setOnMouseClicked((e) -> getEditorMode(EditorModeTargetType.CANVAS).handleMouseClick(e, UMLEditor.this));
+        canvas.setOnDragDetected((e) -> getEditorMode(EditorModeTargetType.CANVAS).handleDragStart(e, UMLEditor.this));
+        canvas.setOnMouseReleased(
+                (e) -> getEditorMode(EditorModeTargetType.CANVAS).handleMouseReleased(e, UMLEditor.this));
         // select
-        canvas.setOnMousePressed((e) -> selectedMode.handleCanvasMousePressed(e, UMLEditor.this));
-        canvas.setOnMouseDragged((e) -> selectedMode.handleCanvasMouseDrag(e, UMLEditor.this));
-        // draw line
+        canvas.setOnMousePressed(
+                (e) -> getEditorMode(EditorModeTargetType.CANVAS).handleMousePressed(e, UMLEditor.this));
+        canvas.setOnMouseDragged(
+                (e) -> getEditorMode(EditorModeTargetType.CANVAS).handleMouseDraging(e, UMLEditor.this));
     }
 
     /* Initialzation end */
@@ -195,7 +204,6 @@ public class UMLEditor {
         if (this.selectedButton != null)
             this.selectedButton.unclick();
         this.selectedButton = selectedButton;
-        selectedMode = selectedButton.getMode();
         clearSelect();
     }
 
@@ -204,8 +212,11 @@ public class UMLEditor {
      * 
      * @return EditorButtonBase
      */
-    public EditorMode getEditorMode() {
-        return selectedMode;
+    public EditorMode getEditorMode(int target) {
+        EditorMode mode;
+        if (selectedButton == null || (mode = selectedButton.getMode(target)) == null) 
+            return emptyMode;
+        return mode;
     }
 
     /* Button function end */
@@ -337,7 +348,7 @@ public class UMLEditor {
 
     /* member start */
     private EditorButton selectedButton;
-    private EditorMode selectedMode = new EditorMode();
+    private EditorMode emptyMode = new EditorMode();
     private ArrayList<ItemBase> itemList = new ArrayList<>();
     private ArrayList<ItemBase> selectedList = new ArrayList<>();
     private Pane canvas;
