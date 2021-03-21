@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.jcomp.UMLEditor;
 import com.jcomp.line.EditorLine;
-import com.jcomp.mode.EditorMode.EditorModeTargetType;
+import com.jcomp.mode.EditorModeBase.EditorModeTargetType;
 
 import javafx.application.Platform;
 import javafx.geometry.BoundingBox;

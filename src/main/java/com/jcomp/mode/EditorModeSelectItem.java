@@ -6,12 +6,7 @@ import com.jcomp.item.ItemBase;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
-public class EditorModeSelectItem extends EditorMode {
-
-    public EditorModeSelectItem() {
-        this.targetType = EditorModeTargetType.Item;
-    }
-
+public class EditorModeSelectItem extends EditorModeBaseItem {
     @Override
     public void handleMousePressed(MouseEvent e, UMLEditor editor) {
         ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData()).getParent();

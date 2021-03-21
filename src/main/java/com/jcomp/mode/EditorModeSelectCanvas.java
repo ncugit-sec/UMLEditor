@@ -7,11 +7,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class EditorModeSelectCanvas extends EditorMode {
+public class EditorModeSelectCanvas extends EditorModeBaseCanvas {
     private Rectangle dragRect = new Rectangle(10, 10);
 
     public EditorModeSelectCanvas() {
-        this.targetType = EditorModeTargetType.CANVAS;
         dragRect.setFill(Color.TRANSPARENT);
         dragRect.setStroke(Color.BLACK);
         dragRect.setStrokeWidth(2);

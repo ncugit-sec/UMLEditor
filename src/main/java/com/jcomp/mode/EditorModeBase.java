@@ -4,17 +4,9 @@ import com.jcomp.UMLEditor;
 
 import javafx.scene.input.MouseEvent;
 
-public class EditorMode {
-    public EditorMode() {
-        this.targetType = -1;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
+public class EditorModeBase {
     public int getTargetType() {
-        return targetType;
+        return -1;
     }
 
     public void handleMousePressed(MouseEvent e, UMLEditor editor) {
@@ -44,9 +36,6 @@ public class EditorMode {
     public void handleMouseReleased(MouseEvent e, UMLEditor editor) {
         return;
     }
-
-    protected int type;
-    protected int targetType;
 
     public final static class EditorModeTargetType {
         public static final int CANVAS = 0;

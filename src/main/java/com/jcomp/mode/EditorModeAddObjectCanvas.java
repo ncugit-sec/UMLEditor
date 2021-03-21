@@ -1,26 +1,33 @@
 package com.jcomp.mode;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import com.jcomp.UMLEditor;
-import com.jcomp.button.EditorButtonType;
 import com.jcomp.item.ItemBase;
-import com.jcomp.item.ItemClass;
-import com.jcomp.item.ItemUseCase;
 
 import javafx.scene.input.MouseEvent;
 
-public class EditorModeAddObjectCanvas extends EditorMode {
-    public EditorModeAddObjectCanvas() {
-        this.targetType = EditorModeTargetType.CANVAS;
+public class EditorModeAddObjectCanvas extends EditorModeBaseCanvas {
+    Class<?> itemBaseClass;
+    public EditorModeAddObjectCanvas(Class<?> itemBaseClass) {
+        this.itemBaseClass = itemBaseClass;
+    }
+
+    @Override
+    public int getTargetType() {
+        return EditorModeTargetType.CANVAS;
     }
 
     @Override
     public void handleMouseClick(MouseEvent e, UMLEditor editor) {
-        ItemBase item = null;
-        if (type == EditorButtonType.CLASS)
-            item = new ItemClass(editor, e.getX(), e.getY());
-        else if (type == EditorButtonType.USE_CASE)
-            item = new ItemUseCase(editor, e.getX(), e.getY());
-        editor.addItemToBoth(item);
+        try {
+            Constructor<?> constructor = itemBaseClass.getConstructor(UMLEditor.class, double.class, double.class);
+            ItemBase item = (ItemBase) constructor.newInstance(editor, e.getX(), e.getY());
+            editor.addItemToBoth(item);
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+            // handle error
+        }
         e.consume();
     }
 }

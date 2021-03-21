@@ -6,20 +6,30 @@ import java.util.Vector;
 import com.jcomp.button.EditorButton;
 import com.jcomp.button.EditorButtonType;
 import com.jcomp.item.ItemBase;
+import com.jcomp.item.ItemClass;
 import com.jcomp.item.ItemGroup;
-import com.jcomp.mode.EditorMode;
+import com.jcomp.item.ItemUseCase;
+import com.jcomp.line.head.EditorLineHeadAssoiciation;
+import com.jcomp.line.head.EditorLineHeadComposition;
+import com.jcomp.line.head.EditorLineHeadGeneralization;
+import com.jcomp.mode.EditorModeBase;
 import com.jcomp.mode.EditorModeAddObjectCanvas;
 import com.jcomp.mode.EditorModeDrawLineItem;
 import com.jcomp.mode.EditorModeSelectCanvas;
 import com.jcomp.mode.EditorModeSelectItem;
-import com.jcomp.mode.EditorMode.EditorModeTargetType;
+import com.jcomp.mode.EditorModeBase.EditorModeTargetType;
 
 import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -89,15 +99,90 @@ public class UMLEditor {
     private void initBtn(BorderPane root) {
         VBox btnBox = new VBox();
         Vector<Button> btns = new Vector<Button>();
-        btns.add(new EditorButton(EditorButtonType.SELECT, UMLEditor.this, new EditorModeSelectItem(),
+        // select
+        btns.add(new EditorButton(getEditorButtonIcon(EditorButtonType.SELECT), UMLEditor.this,
+                new EditorModeSelectItem(),
                 new EditorModeSelectCanvas()));
-        btns.add(new EditorButton(EditorButtonType.ASSOCIATION, UMLEditor.this, new EditorModeDrawLineItem()));
-        btns.add(new EditorButton(EditorButtonType.GENERALIZATION, UMLEditor.this, new EditorModeDrawLineItem()));
-        btns.add(new EditorButton(EditorButtonType.COMPOSITION, UMLEditor.this, new EditorModeDrawLineItem()));
-        btns.add(new EditorButton(EditorButtonType.CLASS, UMLEditor.this, new EditorModeAddObjectCanvas()));
-        btns.add(new EditorButton(EditorButtonType.USE_CASE, UMLEditor.this, new EditorModeAddObjectCanvas()));
+        // draw line
+        double halfWidth = LINE_HEAD_WIDTH / 2;
+        btns.add(new EditorButton(getEditorButtonIcon(EditorButtonType.ASSOCIATION), UMLEditor.this,
+                new EditorModeDrawLineItem(halfWidth, EditorLineHeadAssoiciation.class)));
+        btns.add(new EditorButton(getEditorButtonIcon(EditorButtonType.GENERALIZATION), UMLEditor.this,
+                new EditorModeDrawLineItem(halfWidth, EditorLineHeadGeneralization.class)));
+        btns.add(new EditorButton(getEditorButtonIcon(EditorButtonType.COMPOSITION), UMLEditor.this,
+                new EditorModeDrawLineItem(halfWidth, EditorLineHeadComposition.class)));
+        // add
+        btns.add(new EditorButton(getEditorButtonIcon(EditorButtonType.CLASS), UMLEditor.this,
+                new EditorModeAddObjectCanvas(ItemClass.class)));
+        btns.add(new EditorButton(getEditorButtonIcon(EditorButtonType.USE_CASE), UMLEditor.this,
+                new EditorModeAddObjectCanvas(ItemUseCase.class)));
         btnBox.getChildren().addAll(btns);
         root.setLeft(btnBox);
+    }
+
+    /**
+     * Get editor button icon by type id
+     * 
+     * @param iconType type ID
+     */
+    private ImageView getEditorButtonIcon(int iconType) {
+        int ICON_WIDTH = 50;
+        Canvas canvas = new Canvas(ICON_WIDTH, ICON_WIDTH);
+        WritableImage im = new WritableImage(ICON_WIDTH, ICON_WIDTH);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, ICON_WIDTH, ICON_WIDTH);
+        gc.setLineWidth(5);
+        SnapshotParameters sp = new SnapshotParameters();
+
+        drawIcon(iconType, gc, sp);
+        canvas.snapshot(sp, im);
+        return new ImageView(im);
+
+    }
+
+    /**
+     * Draw icon by type id
+     * 
+     * @param type type ID
+     * @param gc   gc from canvas
+     * @param sp   snapshot parameter
+     * @see UMLEditor#getEditorButtonIcon(int)
+     */
+    private void drawIcon(int type, GraphicsContext gc, SnapshotParameters sp) {
+        switch (type) {
+        case EditorButtonType.SELECT:
+            gc.fillPolygon(new double[] { 8.0, 19.0, 29.0, }, new double[] { 8.0, 28.0, 14.0 }, 3);
+            gc.strokeLine(23, 22, 40, 40);
+            break;
+        case EditorButtonType.ASSOCIATION:
+            gc.strokeLine(7, 25, 15, 11);
+            gc.strokeLine(7, 25, 15, 39);
+            gc.strokeLine(7, 25, 40, 25);
+            break;
+        case EditorButtonType.GENERALIZATION:
+            gc.strokePolygon(new double[] { 7.0, 23.0, 23.0, }, new double[] { 25.0, 11.0, 39.0 }, 3);
+            gc.strokeLine(23, 25, 40, 25);
+            break;
+        case EditorButtonType.COMPOSITION:
+            gc.strokePolygon(new double[] { 7.0, 15.0, 23.0, 15.0 }, new double[] { 25.0, 11.0, 25.0, 39.0 }, 4);
+            gc.strokeLine(23, 25, 40, 25);
+            break;
+        case EditorButtonType.CLASS:
+            gc.setFill(Color.GRAY);
+            gc.fillRect(10.0, 10.0, 30.0, 10.0);
+            gc.fillRect(10.0, 20.0, 30.0, 10.0);
+            gc.fillRect(10.0, 30.0, 30.0, 10.0);
+            gc.strokeRect(10.0, 10.0, 30.0, 10.0);
+            gc.strokeRect(10.0, 20.0, 30.0, 10.0);
+            gc.strokeRect(10.0, 30.0, 30.0, 10.0);
+            break;
+        case EditorButtonType.USE_CASE:
+            gc.setFill(Color.GRAY);
+            gc.fillOval(10, 10, 35, 25);
+            gc.strokeOval(10, 10, 35, 25);
+            break;
+        }
+        sp.setFill(Color.TRANSPARENT);
     }
 
     /**
@@ -107,7 +192,7 @@ public class UMLEditor {
      */
     private void initCanvas(BorderPane root) {
         canvas = new Pane();
-        Rectangle r = new Rectangle(200,200);
+        Rectangle r = new Rectangle(200, 200);
         r.widthProperty().bind(root.widthProperty());
         r.heightProperty().bind(root.heightProperty());
         canvas.setClip(r);
@@ -212,9 +297,9 @@ public class UMLEditor {
      * 
      * @return EditorButtonBase
      */
-    public EditorMode getEditorMode(int target) {
-        EditorMode mode;
-        if (selectedButton == null || (mode = selectedButton.getMode(target)) == null) 
+    public EditorModeBase getEditorMode(int target) {
+        EditorModeBase mode;
+        if (selectedButton == null || (mode = selectedButton.getMode(target)) == null)
             return emptyMode;
         return mode;
     }
@@ -348,9 +433,10 @@ public class UMLEditor {
 
     /* member start */
     private EditorButton selectedButton;
-    private EditorMode emptyMode = new EditorMode();
+    private EditorModeBase emptyMode = new EditorModeBase();
     private ArrayList<ItemBase> itemList = new ArrayList<>();
     private ArrayList<ItemBase> selectedList = new ArrayList<>();
     private Pane canvas;
+    final private double LINE_HEAD_WIDTH = 12.0;
     /* member end */
 }
