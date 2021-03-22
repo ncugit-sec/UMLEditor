@@ -1,21 +1,19 @@
 package com.jcomp.mode;
 
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+
 import com.jcomp.UMLEditor;
 
-import javafx.geometry.BoundingBox;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-
 public class EditorModeSelectCanvas extends EditorModeBaseCanvas {
-    private Rectangle dragRect = new Rectangle(10, 10);
+    private JPanel dragRect = new JPanel();
 
     public EditorModeSelectCanvas() {
-        dragRect.setFill(Color.TRANSPARENT);
-        dragRect.setStroke(Color.BLACK);
-        dragRect.setStrokeWidth(2);
-        dragRect.getStrokeDashArray().addAll(40.0, 30.0, 20.0, 15.0);
-        dragRect.setStrokeDashOffset(2);
+        dragRect.setBorder(BorderFactory.createDashedBorder(Color.black));        
     }
 
     @Override
@@ -23,23 +21,18 @@ public class EditorModeSelectCanvas extends EditorModeBaseCanvas {
         editor.clearSelect();
         dragStartX = e.getX();
         dragStartY = e.getY();
+        editor.addItemToCanvas(dragRect);
+        dragRect.setBounds(e.getX(), e.getY(), 5, 5);
+        dragRect.setOpaque(false);
         e.consume();
     }
 
     @Override
-    public void handleDragStart(MouseEvent e, UMLEditor editor) {
-        dragRect.setWidth(0);
-        dragRect.setHeight(0);
-        editor.addItemToCanvas(dragRect);
-        return;
-    }
-
-    @Override
-    public void handleMouseDraging(MouseEvent e, UMLEditor editor) {
-        double startX = dragStartX;
-        double startY = dragStartY;
-        double endX = e.getX();
-        double endY = e.getY();
+    public void handleMouseDragging(MouseEvent e, UMLEditor editor) {
+        int startX = dragStartX;
+        int startY = dragStartY;
+        int endX = e.getX();
+        int endY = e.getY();
         if (dragStartX > endX) {
             startX = endX;
             endX = dragStartX;
@@ -48,11 +41,9 @@ public class EditorModeSelectCanvas extends EditorModeBaseCanvas {
             startY = endY;
             endY = dragStartY;
         }
-        dragRect.setLayoutX(startX);
-        dragRect.setLayoutY(startY);
-        dragRect.setWidth(endX - startX);
-        dragRect.setHeight(endY - startY);
-        editor.boundSelect(new BoundingBox(startX, startY, endX - startX, endY - startY));
+        dragRect.setBounds(startX, startY, endX - startX, endY - startY);
+        editor.boundSelect(new Rectangle(startX, startY, endX - startX, endY - startY));
+        editor.canvasRepaint();
         return;
     }
 
@@ -61,5 +52,5 @@ public class EditorModeSelectCanvas extends EditorModeBaseCanvas {
         editor.removeItemFromCanvas(dragRect);
     }
 
-    private double dragStartX, dragStartY;
+    private int dragStartX, dragStartY;
 }

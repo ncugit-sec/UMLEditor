@@ -3,26 +3,26 @@ package com.jcomp.mode;
 import com.jcomp.UMLEditor;
 import com.jcomp.item.ItemBase;
 
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
+import java.awt.event.MouseEvent;
 
 public class EditorModeSelectItem extends EditorModeBaseItem {
     @Override
     public void handleMousePressed(MouseEvent e, UMLEditor editor) {
-        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData()).getParent();
-        dragStartX = e.getScreenX();
-        dragStartY = e.getScreenY();
+        ItemBase b = ((ItemBase) e.getSource()).getItemParent();
+        dragStartX = e.getXOnScreen();
+        dragStartY = e.getYOnScreen();
         editor.clearSelect(b);
         b.setDragStart();
         e.consume();
     }
 
     @Override
-    public void handleMouseDraging(MouseEvent e, UMLEditor editor) {
-        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData()).getParent();
-        b.updatePos(e.getScreenX() - dragStartX, e.getScreenY() - dragStartY);
+    public void handleMouseDragging(MouseEvent e, UMLEditor editor) {
+        ItemBase b = ((ItemBase) e.getSource()).getItemParent();
+        b.updatePos(e.getXOnScreen() - dragStartX, e.getYOnScreen() - dragStartY);
+        editor.canvasRepaint();
         e.consume();
     }
 
-    private double dragStartX, dragStartY;
+    private int dragStartX, dragStartY;
 }

@@ -2,61 +2,89 @@ package com.jcomp.item;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Rectangle;
+
 import com.jcomp.UMLEditor;
 import com.jcomp.line.EditorLine;
 import com.jcomp.mode.EditorModeBase.EditorModeTargetType;
 
-import javafx.application.Platform;
-import javafx.geometry.BoundingBox;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-import javafx.scene.text.Text;
-import javafx.util.Pair;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
-public abstract class ItemBase {
+public abstract class ItemBase extends JPanel {
+    private static final long serialVersionUID = 1276122592926326390L;
+
     protected static int CORNER_SIZE = 10;
 
     private ItemBase parent;
-    protected Pane item;
-    protected Text name = new Text();
-    protected ArrayList<Shape> corners = new ArrayList<>();
-    private ArrayList<EditorLine> connectedItems = new ArrayList<>();
-    private double initX, initY, initWidth;
+    // private boolean drawingLine = false;
+    // private int drawingPort;
+    protected String name = "";
+    protected ArrayList<JPanel> corners = new ArrayList<>();
+    protected ArrayList<EditorLine> connectedItems = new ArrayList<>();
+    protected int width, height;
 
-    private double startX, startY;
+    private int startX, startY;
 
     protected ItemBase() {
     }
 
-    public ItemBase(Pane item, UMLEditor editor, double x, double y) {
-        this.item = item;
-        this.parent = this;
-        item.setUserData(this);
+    public ItemBase(UMLEditor editor) {
         // select
-        item.setOnMousePressed((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMousePressed(e, editor));
-        item.setOnMouseDragged((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseDraging(e, editor));
-        // draw
-        item.setOnDragDetected((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragStart(e, editor));
-        item.setOnMouseDragOver((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseDraging(e, editor));
-        item.setOnMouseDragExited(
-                (e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseDragExit(e, editor));
-        item.setOnMouseReleased((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleMouseReleased(e, editor));
-        item.setOnMouseDragReleased((e) -> editor.getEditorMode(EditorModeTargetType.Item).handleDragEnd(e, editor));
+        parent = this;
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                editor.getEditorMode(EditorModeTargetType.Item).handleMousePressed(e, editor);
+            }
 
-        item.setLayoutX(x);
-        item.setLayoutY(y);
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                editor.getEditorMode(EditorModeTargetType.Item).handleMouseEntered(e, editor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                editor.getEditorMode(EditorModeTargetType.Item).handleMouseExit(e, editor);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                editor.getEditorMode(EditorModeTargetType.Item).handleMouseReleased(e, editor);
+            }
+        });
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                editor.getEditorMode(EditorModeTargetType.Item).handleMouseDragging(e, editor);
+            }
+        });
     }
 
-    public ItemBase(Pane item, UMLEditor editor, String s, double x, double y) {
-        this(item, editor, x, y);
-        setText(s);
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawItem(g);
+        updateCorner();
     }
+
+    public void drawOnCanvas(Graphics g) {
+        for (EditorLine l : connectedItems) {
+            l.draw((Graphics2D) g);
+        }
+    }
+
+    protected abstract void drawItem(Graphics g);
 
     /**
      * set Object parent
-     * 
+     *
      * @param parent
      */
     public void setParent(ItemBase parent) {
@@ -68,55 +96,40 @@ public abstract class ItemBase {
      * 
      * @return ItemBase
      */
-    public ItemBase getParent() {
+    public ItemBase getItemParent() {
         return parent;
     }
 
     /**
-     * Get Pane hold by BaseItem
-     * 
-     * @return Pane
-     */
-    public Pane getItem() {
-        return item;
-    }
-
-    protected abstract void _setText();
-
-    /**
      * Implementation of updating width of object
-     * 
+     *
      * @param s
      */
-    public void setText(String s) {
-        name.setText(s);
-        _setText();
-        Platform.runLater(() -> update());
-    };
+    abstract public void _setText(UMLEditor editor);
 
-    public void updateText() {
-        TextInputDialog dialog = new TextInputDialog(name.getText());
-        dialog.setHeaderText("");
-        dialog.setTitle("Edit Name");
-        dialog.setContentText("Please enter the name:");
-        dialog.showAndWait().ifPresent(name -> {
-            setText(name);
-        });
+    public void updateText(UMLEditor editor) {
+        String s = (String) JOptionPane.showInputDialog(editor, "Please enter the name:", "Edit Name",
+                JOptionPane.PLAIN_MESSAGE, null, null, name);
+        if ((s != null)) {
+            name = s;
+            _setText(editor);
+            setBounds(getX(), getY(), width, height);
+        }
     }
 
     // port calculation
 
     /**
      * Calculate Port number by clicked position
-     * 
+     *
      * @param x
      * @param y
      * @return int
      */
-    public int getDragItemDirection(double x, double y) {
-        double a = item.getHeight() / item.getWidth();
+    public int getDragItemDirection(int x, int y) {
+        double a = (double) getHeight() / getWidth();
         boolean down = (y > (a * x));
-        boolean left = (y < (-a * x + item.getHeight()));
+        boolean left = (y < (-a * x + getHeight()));
         if (down && left)
             return 0; // left
         else if (down)
@@ -128,25 +141,43 @@ public abstract class ItemBase {
     }
 
     /**
-     * get port position by oprt number
-     * 
+     * get port X position by oprt number
+     *
      * @param port
-     * @return Pair<Double, Double>
+     * @return int
      */
-    public Pair<Double, Double> getPointbyPort(int port) {
+    public double getPortX(int port) {
         switch (port) {
         case 0:
-            return new Pair<Double, Double>(item.getLayoutX(), item.getLayoutY() + item.getHeight() / 2);
+            return getX();
         case 1:
-            return new Pair<Double, Double>(item.getLayoutX() + item.getWidth() / 2,
-                    item.getLayoutY() + item.getHeight());
+            return (int) (getX() + getWidth() / 2.0);
         case 2:
-            return new Pair<Double, Double>(item.getLayoutX() + item.getWidth(),
-                    item.getLayoutY() + item.getHeight() / 2);
+            return getX() + getWidth();
         case 3:
-            return new Pair<Double, Double>(item.getLayoutX() + item.getWidth() / 2, item.getLayoutY());
+            return (int) (getX() + getWidth() / 2.0);
         }
-        return null;
+        return 0;
+    }
+
+    /**
+     * get port Y position by oprt number
+     *
+     * @param port
+     * @return int
+     */
+    public int getPortY(int port) {
+        switch (port) {
+        case 0:
+            return (int) (getY() + getHeight() / 2.0);
+        case 1:
+            return getY() + getHeight();
+        case 2:
+            return (int) (getY() + getHeight() / 2);
+        case 3:
+            return getY();
+        }
+        return 0;
     }
 
     // handle corner visibility
@@ -162,44 +193,35 @@ public abstract class ItemBase {
 
     /**
      * Check if item is contained in the bounded selection
-     * 
+     *
      * @param box bounding box
      * @return boolean
      */
-    public boolean boundSelectContain(BoundingBox box) {
-        return box.contains(new BoundingBox(item.getLayoutX(), item.getLayoutY(), item.getWidth(), item.getHeight()));
-    }
-
-    /**
-     * get rectangle with default width and height
-     * 
-     * @param x
-     * @param y
-     * @return Rectangle
-     */
-    private Rectangle getRectangleWithSize(double x, double y) {
-        return new Rectangle(x, y, CORNER_SIZE, CORNER_SIZE);
+    public boolean boundSelectContain(Rectangle box) {
+        return box.contains(getX(), getY(), getWidth(), getHeight());
     }
 
     /**
      * setUp corner layout
-     * 
+     *
      * @param id
      * @param x
      * @param y
      */
-    private void setCorner(int id, double x, double y) {
-        corners.get(id).setLayoutX(x);
-        corners.get(id).setLayoutY(y);
+    private void setCorner(int id, int x, int y) {
+        if (id < corners.size()) {
+            corners.get(id).setBounds(x, y, CORNER_SIZE, CORNER_SIZE);
+        }
     }
 
-    private void updateCorner() {
-        double layoutX = item.getLayoutX() - initX, layoutY = item.getLayoutY() - initY;
-        double w = (item.getWidth() - initWidth) / 2;
-        setCorner(0, layoutX + w, layoutY);
-        setCorner(1, layoutX + w, layoutY);
-        setCorner(2, layoutX, layoutY);
-        setCorner(3, layoutX + w * 2, layoutY);
+    protected void updateCorner() {
+        if (corners.size() < 4)
+            return;
+        int layoutX = getX(), layoutY = getY();
+        setCorner(0, layoutX + (width - CORNER_SIZE) / 2, layoutY - CORNER_SIZE);
+        setCorner(1, layoutX + (width - CORNER_SIZE) / 2, layoutY + height);
+        setCorner(2, layoutX - CORNER_SIZE, layoutY + (height - CORNER_SIZE) / 2);
+        setCorner(3, layoutX + width, layoutY + (height - CORNER_SIZE) / 2);
     }
 
     /**
@@ -209,40 +231,38 @@ public abstract class ItemBase {
      */
     public void addCorner(UMLEditor editor) {
         if (corners.isEmpty()) {
-            initX = item.getLayoutX();
-            initY = item.getLayoutY();
-            initWidth = item.getWidth();
-            double width = item.getWidth(), height = item.getHeight();
-            corners.add(getRectangleWithSize(initX + (width - CORNER_SIZE) / 2, initY - CORNER_SIZE));
-            corners.add(getRectangleWithSize(initX + (width - CORNER_SIZE) / 2, initY + height));
-            corners.add(getRectangleWithSize(initX - CORNER_SIZE, initY + (height - CORNER_SIZE) / 2));
-            corners.add(getRectangleWithSize(initX + width, initY + (height - CORNER_SIZE) / 2));
+            removeCorner(editor);
+            for (int x = 0; x < 4; x++) {
+                JPanel p = new JPanel();
+                p.setBackground(Color.black);
+                corners.add(p);
+            }
             editor.addItemToCanvas(corners);
+            updateCorner();
         }
     }
 
-    public void addCorner(UMLEditor editor, double x, double y) {
+    public void addCorner(UMLEditor editor, int x, int y) {
         removeCorner(editor);
-        initX = item.getLayoutX();
-        initY = item.getLayoutY();
-        initWidth = item.getWidth();
-        double width = item.getWidth(), height = item.getHeight();
         int port = getDragItemDirection(x, y);
-        if (port == 3)
-            corners.add(getRectangleWithSize(initX + (width - CORNER_SIZE) / 2, initY - CORNER_SIZE));
+        JPanel p = new JPanel();
+        p.setBackground(Color.black);
+        int layoutX = getX(), layoutY = getY();
+        if (port == 2)
+            p.setBounds(layoutX + width, layoutY + (height - CORNER_SIZE) / 2, CORNER_SIZE, CORNER_SIZE);
         else if (port == 1)
-            corners.add(getRectangleWithSize(initX + (width - CORNER_SIZE) / 2, initY + height));
-        else if (port == 0)
-            corners.add(getRectangleWithSize(initX - CORNER_SIZE, initY + (height - CORNER_SIZE) / 2));
+            p.setBounds(layoutX + (width - CORNER_SIZE) / 2, layoutY + height, CORNER_SIZE, CORNER_SIZE);
+        else if (port == 3)
+            p.setBounds(layoutX + (width - CORNER_SIZE) / 2, layoutY - CORNER_SIZE, CORNER_SIZE, CORNER_SIZE);
         else
-            corners.add(getRectangleWithSize(initX + width, initY + (height - CORNER_SIZE) / 2));
+            p.setBounds(layoutX - CORNER_SIZE, layoutY + (height - CORNER_SIZE) / 2, CORNER_SIZE, CORNER_SIZE);
+        corners.add(p);
         editor.addItemToCanvas(corners);
-
     }
 
     /**
      * remove Corner from canvas
-     * 
+     *
      * @param editor
      */
     public void removeCorner(UMLEditor editor) {
@@ -256,7 +276,7 @@ public abstract class ItemBase {
 
     /**
      * add Drawn line to Canvas
-     * 
+     *
      * @param line
      * @return EditorLine
      */
@@ -274,7 +294,7 @@ public abstract class ItemBase {
 
     /**
      * Un do group For {@link ItemGroup}
-     * 
+     *
      * @param editor
      */
     public void unGroup(UMLEditor editor) {
@@ -282,15 +302,8 @@ public abstract class ItemBase {
 
     // handle drawing udpate
     public void setDragStart() {
-        startX = item.getLayoutX();
-        startY = item.getLayoutY();
-    }
-
-    public void update() {
-        updateCorner();
-        for (EditorLine line : connectedItems) {
-            line.updatePos();
-        }
+        startX = getX();
+        startY = getY();
     }
 
     /**
@@ -299,9 +312,8 @@ public abstract class ItemBase {
      * @param x
      * @param y
      */
-    public void updatePos(double x, double y) {
-        item.setLayoutX(startX + x);
-        item.setLayoutY(startY + y);
-        Platform.runLater(() -> update());
+    public void updatePos(int x, int y) {
+        setBounds(startX + x, startY + y, width, height);
+        repaint();
     }
 }

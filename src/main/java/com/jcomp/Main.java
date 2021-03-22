@@ -1,16 +1,6 @@
 package com.jcomp;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-
-public final class Main extends Application {
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("XYZ UML editor");
-        primaryStage.setScene(new UMLEditor().init());
-        primaryStage.show();
-    }
+public final class Main {
 
     /**
      * Main body of App.
@@ -18,6 +8,6 @@ public final class Main extends Application {
      * @param args The arguments of the program.
      */
     public final static void main(String[] args) {
-        launch(args);
+        new UMLEditor();
     }
 }

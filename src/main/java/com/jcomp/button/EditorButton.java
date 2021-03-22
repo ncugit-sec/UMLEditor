@@ -2,15 +2,21 @@ package com.jcomp.button;
 
 import java.util.ArrayList;
 
+import java.awt.Color;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
+
 import com.jcomp.UMLEditor;
 import com.jcomp.mode.EditorModeBase;
 
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+public class EditorButton extends JButton {
 
-public class EditorButton extends Button {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4712240117996111750L;
 
     /**
      * Constructor for Button
@@ -18,16 +24,13 @@ public class EditorButton extends Button {
      * @param editor
      * @param iconType
      */
-    public EditorButton(ImageView icon, UMLEditor editor, EditorModeBase... modes) {
-        super("");
-        setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                editor.setEditorButton(EditorButton.this);
-                setStyle("-fx-background-color: gray;");
-            }
+    public EditorButton(ImageIcon icon, UMLEditor editor, EditorModeBase... modes) {
+        super("", icon);
+
+        addActionListener((e) -> {
+            editor.setEditorButton(EditorButton.this);
+            setBackground(Color.GRAY);
         });
-        setGraphic(icon);
         for (EditorModeBase e : modes) {
             if (e != null) {
                 while (mode.size() < e.getTargetType() + 1)
@@ -38,7 +41,7 @@ public class EditorButton extends Button {
     }
 
     public void unclick() {
-        setStyle("");
+        setBackground(null);
     }
 
     /**

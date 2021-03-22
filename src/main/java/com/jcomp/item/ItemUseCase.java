@@ -1,30 +1,39 @@
 package com.jcomp.item;
 
-import com.jcomp.Tools;
 import com.jcomp.UMLEditor;
 
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 
 public class ItemUseCase extends ItemBase {
-    static final double MIN_WIDTH = 40;
-    static final double HEIGHT = 20;
-    static final double PADDING = 5;
-    Ellipse circle = new Ellipse();
-    public ItemUseCase(UMLEditor editor, double x, double y) {
-        super(new StackPane(), editor, x, y);
-        circle.setFill(Color.GRAY);
-        circle.setStroke(Color.BLACK);
-        circle.setStrokeWidth(5);
-        circle.setRadiusX(MIN_WIDTH);
-        circle.setRadiusY(HEIGHT);
-        item.getChildren().addAll(circle, name);
+    private static final long serialVersionUID = 1009464545721069900L;
+    static final int MIN_WIDTH = 80;
+    static final int HEIGHT = 40;
+    static final int PADDING = 5;
+
+    public ItemUseCase(UMLEditor editor, int x, int y) {
+        super(editor);
+        width = editor.getStringWidth(name, MIN_WIDTH, PADDING * 2);
+        height = HEIGHT;
+        setBounds(x, y, width, HEIGHT);
+        setOpaque(false);
     }
 
     @Override
-    protected void _setText() {
-        double r = Tools.getTextWidth(name) / 2 + PADDING;
-        circle.setRadiusX(Math.max(r, MIN_WIDTH));
+    protected void drawItem(Graphics g) {
+        FontMetrics metrics = g.getFontMetrics();
+        int stringWidth = metrics.stringWidth(name);
+        width = Math.max(width, stringWidth + PADDING * 2);
+        g.setColor(Color.GRAY);
+        g.fillOval(0, 0, width, HEIGHT);
+        g.setColor(Color.BLACK);
+        g.drawOval(0, 0, width, HEIGHT);
+        g.drawString(name, (width - stringWidth) / 2, (HEIGHT - metrics.getHeight()) / 2 + metrics.getAscent());
     }
+
+    @Override
+    public void _setText(UMLEditor editor) {
+        width = editor.getStringWidth(name, MIN_WIDTH, PADDING * 2);
+    };
 }

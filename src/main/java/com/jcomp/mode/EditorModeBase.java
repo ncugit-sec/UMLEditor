@@ -2,7 +2,8 @@ package com.jcomp.mode;
 
 import com.jcomp.UMLEditor;
 
-import javafx.scene.input.MouseEvent;
+import java.awt.event.MouseEvent;
+import java.awt.Graphics;
 
 public class EditorModeBase {
     public int getTargetType() {
@@ -13,28 +14,32 @@ public class EditorModeBase {
         return;
     }
 
-    public void handleMouseClick(MouseEvent e, UMLEditor editor) {
+    public void handleMouseEntered(MouseEvent e, UMLEditor editor) {
         return;
     }
 
-    public void handleDragStart(MouseEvent e, UMLEditor editor) {
+    public void handleMouseDragging(MouseEvent e, UMLEditor editor) {
         return;
     }
 
-    public void handleMouseDraging(MouseEvent e, UMLEditor editor) {
+    public void handleMouseMoving(MouseEvent e, UMLEditor editor) {
         return;
     }
 
-    public void handleDragEnd(MouseEvent e, UMLEditor editor) {
-        return;
-    }
-
-    public void handleMouseDragExit(MouseEvent e, UMLEditor editor) {
+    public void handleMouseExit(MouseEvent e, UMLEditor editor) {
         return;
     }
 
     public void handleMouseReleased(MouseEvent e, UMLEditor editor) {
         return;
+    }
+
+    public void handleMouseClick(MouseEvent e, UMLEditor editor) {
+        return;
+    }
+
+    public void drawOnCanvas(Graphics g) {
+        
     }
 
     public final static class EditorModeTargetType {

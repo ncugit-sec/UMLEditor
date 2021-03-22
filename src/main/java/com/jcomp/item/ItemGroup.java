@@ -1,12 +1,13 @@
 package com.jcomp.item;
 
 import java.util.ArrayList;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import com.jcomp.UMLEditor;
 
-import javafx.geometry.BoundingBox;
-
 public class ItemGroup extends ItemBase {
+    private static final long serialVersionUID = 5289277990274009356L;
     protected ArrayList<ItemBase> item;
 
     public ItemGroup(UMLEditor editor, ArrayList<ItemBase> item) {
@@ -24,20 +25,12 @@ public class ItemGroup extends ItemBase {
     }
 
     @Override
-    public void updateText() {
-    }
-
-    @Override
-    protected void _setText() {
-    };
-
-    @Override
     public boolean isSelected() {
         return item.get(0).isSelected();
     }
 
     @Override
-    public boolean boundSelectContain(BoundingBox box) {
+    public boolean boundSelectContain(Rectangle box) {
         for (ItemBase b : item) {
             if (!b.boundSelectContain(box))
                 return false;
@@ -79,16 +72,33 @@ public class ItemGroup extends ItemBase {
     }
 
     @Override
-    public void updatePos(double x, double y) {
+    public void updatePos(int x, int y) {
         for (ItemBase b : item) {
             b.updatePos(x, y);
         }
     }
 
     @Override
-    public void update() {
+    public void drawOnCanvas(Graphics g) {
         for (ItemBase b : item) {
-            b.update();
+            b.drawOnCanvas(g);
         }
+    }
+
+    @Override
+    protected void drawItem(Graphics g) {
+        for (ItemBase b : item) {
+            b.drawItem(g);
+        }
+    }
+
+    @Override
+    public void _setText(UMLEditor editor) {
+        // function prohibit
+    };
+
+    @Override
+    public void updateText(UMLEditor editor) {
+        // function prohibit
     }
 }

@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import com.jcomp.UMLEditor;
 import com.jcomp.item.ItemBase;
 
-import javafx.scene.input.MouseEvent;
+import java.awt.event.MouseEvent;
 
 public class EditorModeAddObjectCanvas extends EditorModeBaseCanvas {
     Class<?> itemBaseClass;
@@ -22,7 +22,7 @@ public class EditorModeAddObjectCanvas extends EditorModeBaseCanvas {
     @Override
     public void handleMouseClick(MouseEvent e, UMLEditor editor) {
         try {
-            Constructor<?> constructor = itemBaseClass.getConstructor(UMLEditor.class, double.class, double.class);
+            Constructor<?> constructor = itemBaseClass.getConstructor(UMLEditor.class, int.class, int.class);
             ItemBase item = (ItemBase) constructor.newInstance(editor, e.getX(), e.getY());
             editor.addItemToBoth(item);
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {

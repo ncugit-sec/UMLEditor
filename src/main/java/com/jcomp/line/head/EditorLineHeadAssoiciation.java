@@ -1,14 +1,22 @@
 package com.jcomp.line.head;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polyline;
+import java.awt.Graphics2D;
+import java.awt.geom.GeneralPath;
 
-public class EditorLineHeadAssoiciation extends Polyline {
-    public EditorLineHeadAssoiciation(final double LINE_HEAD_WIDTH) {
-        final double LINE_HEAD_HALFWIDTH = LINE_HEAD_WIDTH / 2;
-        Double d[] = new Double[] { 0.0, LINE_HEAD_WIDTH, LINE_HEAD_HALFWIDTH, 0.0, LINE_HEAD_WIDTH, LINE_HEAD_WIDTH };
-        getPoints().addAll(d);
-        setFill(Color.TRANSPARENT);
-        setStroke(Color.BLACK);
+public class EditorLineHeadAssoiciation extends EditorLineHeadBase {
+
+    @Override
+    public void _drawHead(Graphics2D g2, double startX, double startY, double endX, double endY, double radianTop,
+            double radianDown, double topSin, double topCos, double downSin, double downCos, double dist,
+            double arrowUnit, double topX, double topY, double downX, double downY) {
+
+        GeneralPath arrow = new GeneralPath();
+        arrow.moveTo(endX, endY);
+        arrow.lineTo(topX, topY);
+        arrow.lineTo(endX, endY);
+        arrow.lineTo(downX, downY);
+        arrow.closePath();
+
+        g2.draw(arrow);
     }
 }

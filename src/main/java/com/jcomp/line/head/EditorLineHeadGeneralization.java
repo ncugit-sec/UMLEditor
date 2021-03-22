@@ -1,14 +1,23 @@
 package com.jcomp.line.head;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
+import java.awt.Polygon;
+import java.awt.Color;
+import java.awt.Graphics2D;
 
-public class EditorLineHeadGeneralization extends Polygon {
-    public EditorLineHeadGeneralization(final double LINE_HEAD_WIDTH) {
-        final double LINE_HEAD_HALFWIDTH = LINE_HEAD_WIDTH / 2;
-        Double d[] = new Double[] { LINE_HEAD_HALFWIDTH, 0.0, 0.0, LINE_HEAD_WIDTH, LINE_HEAD_WIDTH, LINE_HEAD_WIDTH };
-        getPoints().addAll(d);
-        setFill(Color.WHITE);
-        setStroke(Color.BLACK);
+public class EditorLineHeadGeneralization extends EditorLineHeadBase {
+    @Override
+    public void _drawHead(Graphics2D g2, double startX, double startY, double endX, double endY, double radianTop,
+            double radianDown, double topSin, double topCos, double downSin, double downCos, double dist,
+            double arrowUnit, double topX, double topY, double downX, double downY) {
+        Polygon arrow = new Polygon();
+
+        arrow.addPoint((int) endX, (int) endY);
+        arrow.addPoint((int) topX, (int) topY);
+        arrow.addPoint((int) downX, (int) downY);
+
+        g2.setPaint(Color.white);
+        g2.fill(arrow);
+        g2.setPaint(Color.black);
+        g2.draw(arrow);
     }
 }

@@ -6,88 +6,99 @@ import java.lang.reflect.InvocationTargetException;
 import com.jcomp.UMLEditor;
 import com.jcomp.item.ItemBase;
 import com.jcomp.line.EditorLine;
+import com.jcomp.line.head.EditorLineHeadAssoiciation;
+import com.jcomp.line.head.EditorLineHeadBase;
 
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import java.awt.event.MouseEvent;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class EditorModeDrawLineItem extends EditorModeBaseItem {
 
-    private ItemBase dragSrc;
+    private ItemBase dragSrc, dragDst;
     private int dragStartPort;
-    private EditorLine drawingLine;
-    final private double HEAD_HALF_WIDTH;
+    private int dragX, dragY;
+    private EditorLine preview;
+    final private int HEAD_HALF_WIDTH;
 
     private Constructor<?> shapeClassConstructor;
 
-    public EditorModeDrawLineItem(double halfWidth, Class<?> shapeClass) {
+    public EditorModeDrawLineItem(int halfWidth, Class<?> shapeClass) {
         this.HEAD_HALF_WIDTH = halfWidth;
         try {
-            shapeClassConstructor = shapeClass.getConstructor(double.class);
+            shapeClassConstructor = shapeClass.getConstructor();
         } catch (NoSuchMethodException | SecurityException e) {
             shapeClassConstructor = null;
         }
     }
 
     @Override
-    public void handleDragStart(MouseEvent e, UMLEditor editor) {
-        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData());
+    public void handleMousePressed(MouseEvent e, UMLEditor editor) {
+        ItemBase b = (ItemBase) e.getSource();
+        dragDst = null;
+        dragSrc = null;
+        preview = null;
         if (b.isGroup())
             return;
         dragSrc = b;
-        b.getItem().startFullDrag();
         dragStartPort = b.getDragItemDirection(e.getX(), e.getY());
-        drawingLine = new EditorLine(b, dragStartPort, getAddLineShape(), editor, HEAD_HALF_WIDTH,
-                e.getX() + b.getItem().getLayoutX(), e.getY() + b.getItem().getLayoutY());
+        preview = new EditorLine(getAddLineShape(), dragSrc, dragStartPort, editor, HEAD_HALF_WIDTH, e.getX(), e.getY());
     }
 
     @Override
-    public void handleMouseDraging(MouseEvent e, UMLEditor editor) {
-        if (drawingLine == null)
-            return;
-        Node n = (Node) e.getSource();
-        ItemBase b = (ItemBase) n.getUserData();
-        if (b != dragSrc && !b.isGroup())
-            ((ItemBase) n.getUserData()).addCorner(editor, e.getX(), e.getY());
-        drawingLine.updatePos(e.getX() + n.getLayoutX(), e.getY() + n.getLayoutY());
+    public void handleMouseEntered(MouseEvent e, UMLEditor editor) {
+        if (dragSrc != null && dragSrc != e.getSource()) 
+            dragDst = (ItemBase) e.getSource();
+    }
+
+    @Override
+    public void handleMouseDragging(MouseEvent e, UMLEditor editor) {
+        if (dragDst != null && !dragDst.isGroup()) {
+            dragDst.addCorner(editor, e.getX() + dragSrc.getX() - dragDst.getX(),
+                    e.getY() + dragSrc.getY() - dragDst.getY());
+        }
+        ItemBase b = (ItemBase) e.getSource();
+        dragX = e.getX() + b.getX();
+        dragY = e.getY() + b.getY();
+        editor.repaint();
+    }
+
+    public void handleMouseExit(MouseEvent e, UMLEditor editor) {
+        dragDst = null;
+        ((ItemBase) e.getSource()).removeCorner(editor);
     }
 
     @Override
     public void handleMouseReleased(MouseEvent e, UMLEditor editor) {
-        if (drawingLine == null)
-            return;
-        drawingLine.remove(editor);
-        drawingLine = null;
-    }
-
-    public void handleMouseDragExit(MouseEvent e, UMLEditor editor) {
-        ((ItemBase) ((Node) e.getSource()).getUserData()).removeCorner(editor);
+        if (dragDst != null && !dragDst.isGroup()) {
+            dragDst.removeCorner(editor);
+            int dragEndPort = dragDst.getDragItemDirection(e.getX() + dragSrc.getX() - dragDst.getX(),
+                    e.getY() + dragSrc.getY() - dragDst.getY());
+            dragDst.addLine(dragSrc.addLine(new EditorLine(getAddLineShape(), dragSrc, dragStartPort, dragDst,
+                    dragEndPort, editor, HEAD_HALF_WIDTH)));
+        }
+        dragSrc = null;
+        dragDst = null;
+        preview = null;
+        editor.canvasRepaint();
     }
 
     @Override
-    public void handleDragEnd(MouseEvent e, UMLEditor editor) {
-        ItemBase b = ((ItemBase) ((Node) e.getSource()).getUserData());
-        if (b.isGroup() || dragSrc == b)
-            return;
-        ItemBase src = dragSrc;
-        int srcDir = dragStartPort;
-        ItemBase dst = b;
-        int dstDir = b.getDragItemDirection(e.getX(), e.getY());
-
-        dst.addLine(src.addLine(new EditorLine(src, srcDir, dst, dstDir, getAddLineShape(), editor, HEAD_HALF_WIDTH)));
-        e.consume();
+    public void drawOnCanvas(Graphics g) {
+        if (preview != null) 
+            preview.draw((Graphics2D)g, dragX, dragY);
     }
 
     /**
-     * Get head shape of assigned line type
-     * @return Shape
+     * Get head shape Constructor of assigned line type
+     * 
+     * @return EditorLineHeadBase
      */
-    private Shape getAddLineShape() {
-        Shape shape = new Rectangle();
+    private EditorLineHeadBase getAddLineShape() {
+        EditorLineHeadBase shape = new EditorLineHeadAssoiciation();
         if (shapeClassConstructor != null)
             try {
-                shape = (Shape) shapeClassConstructor.newInstance(HEAD_HALF_WIDTH * 2);
+                shape = (EditorLineHeadBase) shapeClassConstructor.newInstance();
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException e) {
                 // handle error
