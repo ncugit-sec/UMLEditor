@@ -325,9 +325,10 @@ public class UMLEditor extends JFrame {
      * 
      * @param b BaseItem
      */
-    public void addItemToCanvas(ArrayList<JPanel> b) {
+    public void addItemToCanvaTop(ArrayList<JPanel> b) {
         for (JPanel i : b) {
             canvas.add(i);
+            canvas.setComponentZOrder(i, 0);
         }
         canvas.repaint();
     }
@@ -543,6 +544,10 @@ public class UMLEditor extends JFrame {
 
     public void canvasRepaint() {
         canvas.repaint();
+    }
+
+    public JPanel getCanvas() {
+        return canvas;
     }
 
     /* member start */

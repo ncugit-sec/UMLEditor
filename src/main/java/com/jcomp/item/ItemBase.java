@@ -237,7 +237,7 @@ public abstract class ItemBase extends JPanel {
                 p.setBackground(Color.black);
                 corners.add(p);
             }
-            editor.addItemToCanvas(corners);
+            editor.addItemToCanvaTop(corners);
             updateCorner();
         }
     }
@@ -257,7 +257,7 @@ public abstract class ItemBase extends JPanel {
         else
             p.setBounds(layoutX - CORNER_SIZE, layoutY + (height - CORNER_SIZE) / 2, CORNER_SIZE, CORNER_SIZE);
         corners.add(p);
-        editor.addItemToCanvas(corners);
+        editor.addItemToCanvaTop(corners);
     }
 
     /**
