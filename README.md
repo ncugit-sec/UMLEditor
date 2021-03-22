@@ -2,12 +2,26 @@
 ## Introduction
 A simplified UML editor project in [2021-Spring-OOAD](https://classroom.google.com/u/0/c/Mjc3NjkxNTg3OTgw) for practicing object oriented programming
 
-## How To Run
+## How To Use
+### Run
 run by command Line
 ```
 $ java -jar bin/uml-editor-4.0-Swing-jar-with-dependencies.jar
 ```
+or 
+```
+# mvn exec:java -f "pom.xml"
+```
 Or directly run bin/uml-editor-4.0-Swing-jar-with-dependencies.jar
+### Compile
+```
+# mvn compiler:compile -f "pom.xml"
+```
+or use IDE
+### Pack To Jar
+```
+# mvn assembly:single -f "pom.xml"
+```
 
 ## Environment
 * Java SE Development Kit 16
