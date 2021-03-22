@@ -1,138 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.4" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
-  realizations="true" associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="com.jcomp.line.EditorLine" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/line/EditorLine.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="316" width="528" x="777" y="1717"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="901" y="2158"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.jcomp.mode.EditorModeBaseItem" project="uml-editor" 
+  <class id="2" language="java" name="com.jcomp.line.head.EditorLineHeadBase" project="uml-editor" 
+    file="/uml-editor/src/main/java/com/jcomp/line/head/EditorLineHeadBase.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="468" y="2528"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.jcomp.mode.EditorModeBaseItem" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/mode/EditorModeBaseItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="116" width="207" x="878" y="1225"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="743" y="1554"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.jcomp.button.EditorButton" project="uml-editor" 
+  <class id="4" language="java" name="javax.swing.JButton" project="uml-editor" 
+    file="C:/Users/Alan/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_11.0.2.v20200815-0835/jre/lib/jrt-fs.jar" 
+    binary="true" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="847" y="394"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.jcomp.button.EditorButton" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/button/EditorButton.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="156" width="408" x="1230" y="733"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="887" y="1010"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.jcomp.line.head.EditorLineHeadAssoiciation" project="uml-editor" 
+  <class id="6" language="java" name="com.jcomp.line.head.EditorLineHeadAssoiciation" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/line/head/EditorLineHeadAssoiciation.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="96" width="279" x="1049" y="3893"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="116" width="632" x="729" y="2643"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.jcomp.mode.EditorModeBase" project="uml-editor" 
+  <class id="7" language="java" name="com.jcomp.mode.EditorModeBase" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/mode/EditorModeBase.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="256" width="394" x="741" y="929"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="1255" y="1317"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.jcomp.mode.EditorModeBase.EditorModeTargetType" project="uml-editor" 
-    file="/uml-editor/src/main/java/com/jcomp/mode/EditorModeBase.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="525" y="1069"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="7" language="java" name="com.jcomp.line.head.EditorLineHeadComposition" project="uml-editor" 
+  <class id="8" language="java" name="com.jcomp.line.head.EditorLineHeadComposition" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/line/head/EditorLineHeadComposition.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="96" width="282" x="667" y="3893"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="116" width="440" x="-308" y="2644"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="com.jcomp.item.ItemUseCase" project="uml-editor" 
+  <class id="9" language="java" name="com.jcomp.item.ItemUseCase" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/item/ItemUseCase.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="196" width="307" x="1155" y="2880"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="216" width="377" x="1978" y="3204"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="com.jcomp.item.ItemBase" project="uml-editor" 
+  <class id="10" language="java" name="com.jcomp.item.ItemBase" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/item/ItemBase.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="737" width="364" x="1326" y="2093"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="698" width="377" x="1664" y="2456"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="com.jcomp.mode.EditorModeDrawLineItem" project="uml-editor" 
+  <class id="11" language="java" name="com.jcomp.mode.EditorModeDrawLineItem" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/mode/EditorModeDrawLineItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="276" width="394" x="878" y="1401"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="941" y="1842"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="com.jcomp.mode.EditorModeBaseCanvas" project="uml-editor" 
+  <class id="12" language="java" name="com.jcomp.mode.EditorModeBaseCanvas" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/mode/EditorModeBaseCanvas.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="116" width="233" x="558" y="1225"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="1767" y="1563"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="com.jcomp.Main" project="uml-editor" 
+  <class id="13" language="java" name="com.jcomp.Main" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/Main.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1415" y="120"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="1515" y="108"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="com.jcomp.UMLEditor" project="uml-editor" 
+  <class id="14" language="java" name="com.jcomp.UMLEditor" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/UMLEditor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="656" width="419" x="1719" y="37"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="1481" y="544"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="com.jcomp.mode.EditorModeSelectItem" project="uml-editor" 
+  <class id="15" language="java" name="com.jcomp.mode.EditorModeSelectItem" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/mode/EditorModeSelectItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="176" width="386" x="1312" y="1401"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="15" language="java" name="com.jcomp.Tools" project="uml-editor" 
-    file="/uml-editor/src/main/java/com/jcomp/Tools.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1436" y="285"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="508" y="1762"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -141,8 +142,8 @@
   <class id="16" language="java" name="com.jcomp.line.head.EditorLineHeadGeneralization" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/line/head/EditorLineHeadGeneralization.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="96" width="293" x="334" y="3893"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="116" width="520" x="159" y="2643"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -150,8 +151,8 @@
   </class>  
   <class id="17" language="java" name="com.jcomp.mode.EditorModeSelectCanvas" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/mode/EditorModeSelectCanvas.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="236" width="394" x="444" y="1401"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="1994" y="1778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -159,8 +160,8 @@
   </class>  
   <class id="18" language="java" name="com.jcomp.button.EditorButtonType" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/button/EditorButtonType.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1065" y="776"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="1152" y="314"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -168,287 +169,277 @@
   </class>  
   <class id="19" language="java" name="com.jcomp.item.ItemGroup" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/item/ItemGroup.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1978" y="3048"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="-1" width="-1" x="2490" y="2926"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="com.jcomp.item.ItemClass" project="uml-editor" 
+  <class id="20" language="java" name="javax.swing.JPanel" project="uml-editor" 
+    file="C:/Users/Alan/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_11.0.2.v20200815-0835/jre/lib/jrt-fs.jar" 
+    binary="true" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1948" y="2184"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="com.jcomp.item.ItemClass" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/item/ItemClass.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="296" width="281" x="1502" y="2880"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="216" width="376" x="2395" y="3204"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="com.jcomp.mode.EditorModeAddObjectCanvas" project="uml-editor" 
+  <class id="22" language="java" name="com.jcomp.mode.EditorModeAddObjectCanvas" project="uml-editor" 
     file="/uml-editor/src/main/java/com/jcomp/mode/EditorModeAddObjectCanvas.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="156" width="362" x="42" y="1401"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="22" language="java" name="javafx.scene.shape.Shape" project="uml-editor" 
-    file="C:/Users/Alan/.m2/repository/org/openjfx/javafx-graphics/13/javafx-graphics-13-win.jar" binary="true" 
-    corner="BOTTOM_RIGHT">    
-    <position height="597" width="338" x="621" y="2881"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="23" language="java" name="javafx.scene.shape.Polygon" project="uml-editor" 
-    file="C:/Users/Alan/.m2/repository/org/openjfx/javafx-graphics/13/javafx-graphics-13-win.jar" binary="true" 
-    corner="BOTTOM_RIGHT">    
-    <position height="296" width="508" x="501" y="3517"/>    
+    <position height="-1" width="-1" x="1576" y="1758"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="24" language="java" name="javafx.scene.shape.Polyline" project="uml-editor" 
-    file="C:/Users/Alan/.m2/repository/org/openjfx/javafx-graphics/13/javafx-graphics-13-win.jar" binary="true" 
-    corner="BOTTOM_RIGHT">    
-    <position height="336" width="508" x="1049" y="3517"/>    
+  <class id="23" language="java" name="com.jcomp.mode.EditorModeBase.EditorModeTargetType" project="uml-editor" 
+    file="/uml-editor/src/main/java/com/jcomp/mode/EditorModeBase.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1621" y="1325"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="25">    
-    <end type="SOURCE" refId="24"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <association id="26">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="27" name="selectedButton">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="28" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+  <association id="24">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="25" name="item"/>      
+      <multiplicity id="26" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="29">    
-    <end type="SOURCE" refId="10"/>    
+  <generalization id="27">    
+    <end type="SOURCE" refId="16"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
-  <generalization id="30">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
+  <association id="28">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="29" name="corners"/>      
+      <multiplicity id="30" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <generalization id="31">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="23"/>  
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="12"/>  
   </generalization>  
   <generalization id="32">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="23"/>  
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="7"/>  
   </generalization>  
-  <generalization id="33">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <nesting id="34">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="6"/>  
-  </nesting>  
-  <association id="35">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="36" name="corners">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="37" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="38">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <association id="39">    
-    <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="40" name="item">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="41" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="42">    
-    <bendpoint x="786" y="2093"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="43" name="head">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="44" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="45">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="46" name="connectedItems">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="47" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+  <association id="33">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="34" name="connectedItems"/>      
+      <multiplicity id="35" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="48">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <association id="49">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="50" name="mode">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="51" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+  <association id="36">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="37" name="selectedButton"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="52">    
-    <bendpoint x="1749" y="733"/>    
-    <bendpoint x="1749" y="929"/>    
-    <bendpoint x="1749" y="1225"/>    
-    <bendpoint x="1749" y="1401"/>    
-    <bendpoint x="1749" y="1717"/>    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="53" name="selectedList">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="54" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+  <generalization id="39">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="40">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="41" name="head"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="55">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="56" name="drawingLine">        
-        <position height="0" width="0" x="0" y="0"/>      
+  <generalization id="43">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="44">    
+    <bendpoint x="2224" y="956"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="45" name="emptyMode"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="47">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="48" name="src"/>      
+      <multiplicity id="49" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="50">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="51">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="52" name="mode"/>      
+      <multiplicity id="53" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="54">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="55">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="56">    
+    <bendpoint x="2433" y="956"/>    
+    <bendpoint x="2433" y="1172"/>    
+    <bendpoint x="2433" y="1488"/>    
+    <bendpoint x="2433" y="1664"/>    
+    <bendpoint x="2433" y="2040"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="57" name="itemList">        
+        <position height="22" width="64" x="2070" y="2527"/>      
       </attribute>      
-      <multiplicity id="57" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="58" minimum="0" maximum="2147483647">        
+        <position height="20" width="28" x="2074" y="2549"/>      
       </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="59">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="60">    
+    <bendpoint x="1612" y="2040"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="61" name="dragDst">        
+        <position height="22" width="65" x="1736" y="2390"/>      
+      </attribute>      
+      <multiplicity id="62" minimum="0" maximum="1">        
+        <position height="20" width="31" x="1750" y="2414"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="63">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <generalization id="64">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <generalization id="66">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="67">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <association id="68">    
+    <bendpoint x="2454" y="956"/>    
+    <bendpoint x="2454" y="1172"/>    
+    <bendpoint x="2454" y="1488"/>    
+    <bendpoint x="2454" y="1664"/>    
+    <bendpoint x="2454" y="2040"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="69" name="selectedList">        
+        <position height="22" width="93" x="2062" y="2471"/>      
+      </attribute>      
+      <multiplicity id="70" minimum="0" maximum="2147483647">        
+        <position height="20" width="28" x="2057" y="2499"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="71">    
+    <bendpoint x="1633" y="2040"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="72" name="dragSrc">        
+        <position height="22" width="65" x="1653" y="2396"/>      
+      </attribute>      
+      <multiplicity id="73" minimum="0" maximum="1">        
+        <position height="20" width="31" x="1698" y="2422"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="74">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="75" name="dragRect"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="77">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="23"/>  
+  </nesting>  
+  <association id="78">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="79" name="parent"/>      
+      <multiplicity id="80" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="81">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="82" name="preview"/>      
+      <multiplicity id="83" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="58">    
+  <association id="84">    
+    <bendpoint x="2412" y="956"/>    
+    <bendpoint x="2412" y="1172"/>    
+    <bendpoint x="2412" y="1488"/>    
+    <bendpoint x="2412" y="1664"/>    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="85" name="canvas"/>      
+      <multiplicity id="86" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="87">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="59" name="dst">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="60" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+      <attribute id="88" name="dst"/>      
+      <multiplicity id="89" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="61">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="62" name="parent">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="63" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="64">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="65" name="src">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="66" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="67">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <generalization id="68">    
-    <end type="SOURCE" refId="20"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <generalization id="69">    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <generalization id="70">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <association id="71">    
-    <bendpoint x="1335" y="1717"/>    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="72" name="dragSrc">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="73" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="74">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <generalization id="75">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="24"/>  
-  </generalization>  
-  <association id="76">    
-    <bendpoint x="1728" y="733"/>    
-    <bendpoint x="1728" y="929"/>    
-    <bendpoint x="1728" y="1225"/>    
-    <bendpoint x="1728" y="1401"/>    
-    <bendpoint x="1728" y="1717"/>    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="77" name="itemList">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="78" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
