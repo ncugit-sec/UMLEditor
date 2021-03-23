@@ -5,13 +5,18 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.jcomp.UMLEditor;
 import com.jcomp.item.ItemBase;
+import com.jcomp.item.shape.ItemShapeBase;
 
 import java.awt.event.MouseEvent;
 
 public class EditorModeAddObjectCanvas extends EditorModeBaseCanvas {
-    Class<?> itemBaseClass;
-    public EditorModeAddObjectCanvas(Class<?> itemBaseClass) {
-        this.itemBaseClass = itemBaseClass;
+    Constructor<?> itemShapeConstructor = null;
+    public EditorModeAddObjectCanvas(Class<?> itemShapeClass) {
+        try {
+            this.itemShapeConstructor = itemShapeClass.getConstructor(UMLEditor.class, int.class, int.class);
+        } catch (NoSuchMethodException | SecurityException e) {
+            // handle error
+        }
     }
 
     @Override
@@ -22,10 +27,10 @@ public class EditorModeAddObjectCanvas extends EditorModeBaseCanvas {
     @Override
     public void handleMouseClick(MouseEvent e, UMLEditor editor) {
         try {
-            Constructor<?> constructor = itemBaseClass.getConstructor(UMLEditor.class, int.class, int.class);
-            ItemBase item = (ItemBase) constructor.newInstance(editor, e.getX(), e.getY());
+            ItemShapeBase shape = (ItemShapeBase) itemShapeConstructor.newInstance(editor, e.getX(), e.getY());
+            ItemBase item = new ItemBase(editor, shape);
             editor.addItemToBoth(item);
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+        } catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
             // handle error
         }
         e.consume();

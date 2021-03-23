@@ -26,10 +26,11 @@ import javax.swing.WindowConstants;
 import com.jcomp.button.EditorButton;
 import com.jcomp.button.EditorButtonType;
 import com.jcomp.item.ItemBase;
-import com.jcomp.item.ItemClass;
 import com.jcomp.item.ItemGroup;
-import com.jcomp.item.ItemUseCase;
+import com.jcomp.item.shape.ItemShapeClass;
+import com.jcomp.item.shape.ItemShapeUseCase;
 import com.jcomp.line.head.EditorLineHeadAssoiciation;
+import com.jcomp.line.head.EditorLineHeadBase;
 import com.jcomp.line.head.EditorLineHeadComposition;
 import com.jcomp.line.head.EditorLineHeadGeneralization;
 import com.jcomp.mode.EditorModeAddObjectCanvas;
@@ -123,9 +124,9 @@ public class UMLEditor extends JFrame {
                 new EditorModeDrawLineItem(halfWidth, EditorLineHeadComposition.class)));
         // add
         btnBox.add(new EditorButton(getEditorButtonIcon(EditorButtonType.CLASS), UMLEditor.this,
-                new EditorModeAddObjectCanvas(ItemClass.class)));
+                new EditorModeAddObjectCanvas(ItemShapeClass.class)));
         btnBox.add(new EditorButton(getEditorButtonIcon(EditorButtonType.USE_CASE), UMLEditor.this,
-                new EditorModeAddObjectCanvas(ItemUseCase.class)));
+                new EditorModeAddObjectCanvas(ItemShapeUseCase.class)));
         add(btnBox);
     }
 
@@ -137,7 +138,8 @@ public class UMLEditor extends JFrame {
     private ImageIcon getEditorButtonIcon(int iconType) {
         ImageIcon icon = null;
         int ICON_WIDTH = 50;
-        JPanel canvas = drawButtonIcon(iconType);
+        JPanel canvas = drawButtonIcon(iconType, ICON_WIDTH);
+        canvas.setOpaque(false);
         canvas.setSize(ICON_WIDTH, ICON_WIDTH);
         BufferedImage bi = new BufferedImage(ICON_WIDTH, ICON_WIDTH, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = bi.createGraphics();
@@ -154,19 +156,17 @@ public class UMLEditor extends JFrame {
 
     }
 
-    /**
-     * Draw icon by type id
-     * 
-     * @param type type ID
-     * @param gc   gc from canvas
-     * @param sp   snapshot parameter
-     * @see UMLEditor#getEditorButtonIcon(int)
-     */
-    private JPanel drawButtonIcon(int type) {
-        JPanel panel = null;
+    private JPanel drawButtonIcon(int type, int ICON_WIDTH) {
         switch (type) {
+        case EditorButtonType.ASSOCIATION:
+        case EditorButtonType.GENERALIZATION:
+        case EditorButtonType.COMPOSITION:
+            return drawLineButtonIcon(type);
+        case EditorButtonType.USE_CASE:
+        case EditorButtonType.CLASS:
+            return drawObjectButtonIcon(type, ICON_WIDTH);
         case EditorButtonType.SELECT:
-            panel = new JPanel() {
+            return new JPanel() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
@@ -176,86 +176,59 @@ public class UMLEditor extends JFrame {
                     g.drawLine(23, 22, 40, 40);
                 }
             };
-            break;
-        case EditorButtonType.ASSOCIATION:
-            panel = new JPanel() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.drawLine(7, 25, 15, 11);
-                    g.drawLine(7, 25, 15, 39);
-                    g.drawLine(7, 25, 40, 25);
-                }
-            };
-            break;
-        case EditorButtonType.GENERALIZATION:
-            panel = new JPanel() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.setColor(Color.white);
-                    g.fillPolygon(new Polygon(new int[] { 7, 23, 23 }, new int[] { 25, 11, 39 }, 3));
-                    g.setColor(Color.black);
-                    g.drawPolygon(new Polygon(new int[] { 7, 23, 23 }, new int[] { 25, 11, 39 }, 3));
-                    g.drawLine(23, 25, 40, 25);
-                }
-            };
-            break;
-        case EditorButtonType.COMPOSITION:
-            panel = new JPanel() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.setColor(Color.white);
-                    g.fillPolygon(new Polygon(new int[] { 7, 15, 23, 15 }, new int[] { 25, 17, 25, 33 }, 4));
-                    g.setColor(Color.black);
-                    g.drawPolygon(new Polygon(new int[] { 7, 15, 23, 15 }, new int[] { 25, 17, 25, 33 }, 4));
-                    g.drawLine(23, 25, 40, 25);
-                }
-            };
-            break;
-        case EditorButtonType.CLASS:
-            panel = new JPanel() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.setColor(Color.GRAY);
-                    g.fillRect(10, 10, 30, 10);
-                    g.fillRect(10, 20, 30, 10);
-                    g.fillRect(10, 30, 30, 10);
-                    g.setColor(Color.black);
-                    g.drawRect(10, 10, 30, 10);
-                    g.drawRect(10, 20, 30, 10);
-                    g.drawRect(10, 30, 30, 10);
-                }
-            };
-            break;
-        case EditorButtonType.USE_CASE:
-            panel = new JPanel() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.setColor(Color.GRAY);
-                    g.fillOval(10, 10, 35, 25);
-                    g.setColor(Color.black);
-                    g.drawOval(10, 10, 35, 25);
-                }
-            };
-            break;
         }
-        if (panel != null)
-            panel.setOpaque(false);
-        return panel;
+
+        return null;
+    }
+
+    /**
+     * Draw add Line icon by button type id
+     * 
+     * @param type type ID
+     * @param gc   gc from canvas
+     * @param sp   snapshot parameter
+     * @see UMLEditor#getEditorButtonIcon(int)
+     */
+    private JPanel drawLineButtonIcon(int type) {
+        final EditorLineHeadBase head;
+        if (type == EditorButtonType.ASSOCIATION)
+            head = new EditorLineHeadAssoiciation();
+        else if (type == EditorButtonType.GENERALIZATION)
+            head = new EditorLineHeadGeneralization();
+        else if (type == EditorButtonType.COMPOSITION)
+            head = new EditorLineHeadComposition();
+        else
+            head = null;
+        return new JPanel() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawLine(10, 25, 40, 25);
+                head.drawHead((Graphics2D) g, 40, 25, 10, 25);
+            }
+        };
+    }
+
+    /**
+     * Draw add object by button type id
+     * 
+     * @param type type ID
+     * @param gc   gc from canvas
+     * @param sp   snapshot parameter
+     * @see UMLEditor#getEditorButtonIcon(int)
+     */
+    private JPanel drawObjectButtonIcon(int type, int ICON_WIDTH) {
+        switch (type) {
+        case EditorButtonType.USE_CASE: {
+            int widthHeightDiff = 20;
+            return new ItemShapeUseCase(this, 0, widthHeightDiff / 2, ICON_WIDTH, ICON_WIDTH - widthHeightDiff);
+        }
+        case EditorButtonType.CLASS:
+            return new ItemShapeClass(this, 0, 0, ICON_WIDTH, ICON_WIDTH);
+        }
+        return null;
     }
 
     /**
@@ -315,7 +288,7 @@ public class UMLEditor extends JFrame {
     public void addItemToBoth(ItemBase b) {
         itemList.add(b);
         if (b != null) {
-            canvas.add(b);
+            b.addToCanvas(canvas);
         }
         canvas.repaint();
     }

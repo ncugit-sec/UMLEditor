@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Rectangle;
 
 import com.jcomp.UMLEditor;
+import com.jcomp.item.shape.ItemShapeBase;
 import com.jcomp.line.EditorLine;
 import com.jcomp.mode.EditorModeBase.EditorModeTargetType;
 
@@ -17,28 +18,27 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public abstract class ItemBase extends JPanel {
-    private static final long serialVersionUID = 1276122592926326390L;
-
+public class ItemBase {
     protected static int CORNER_SIZE = 10;
 
     private ItemBase parent;
+    private ItemShapeBase item;
     // private boolean drawingLine = false;
     // private int drawingPort;
-    protected String name = "";
     protected ArrayList<JPanel> corners = new ArrayList<>();
     protected ArrayList<EditorLine> connectedItems = new ArrayList<>();
-    protected int width, height;
 
     private int startX, startY;
 
     protected ItemBase() {
     }
 
-    public ItemBase(UMLEditor editor) {
+    public ItemBase(UMLEditor editor, ItemShapeBase item) {
         // select
         parent = this;
-        addMouseListener(new MouseAdapter() {
+        this.item = item;
+        item.putClientProperty("parent", this);
+        item.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 editor.getEditorMode(EditorModeTargetType.Item).handleMousePressed(e, editor);
@@ -59,7 +59,7 @@ public abstract class ItemBase extends JPanel {
                 editor.getEditorMode(EditorModeTargetType.Item).handleMouseReleased(e, editor);
             }
         });
-        addMouseMotionListener(new MouseMotionAdapter() {
+        item.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 editor.getEditorMode(EditorModeTargetType.Item).handleMouseDragging(e, editor);
@@ -67,10 +67,12 @@ public abstract class ItemBase extends JPanel {
         });
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawItem(g);
+    public void addToCanvas(JPanel canvas) {
+        canvas.add(item);
+    }
+
+    public void repaint() {
+        item.repaint();
         updateCorner();
     }
 
@@ -79,8 +81,6 @@ public abstract class ItemBase extends JPanel {
             l.draw((Graphics2D) g);
         }
     }
-
-    protected abstract void drawItem(Graphics g);
 
     /**
      * set Object parent
@@ -100,21 +100,13 @@ public abstract class ItemBase extends JPanel {
         return parent;
     }
 
-    /**
-     * Implementation of updating width of object
-     *
-     * @param s
-     */
-    abstract public void _setText(UMLEditor editor);
-
     public void updateText(UMLEditor editor) {
+        if (isGroup())
+            return;
         String s = (String) JOptionPane.showInputDialog(editor, "Please enter the name:", "Edit Name",
-                JOptionPane.PLAIN_MESSAGE, null, null, name);
-        if ((s != null)) {
-            name = s;
-            _setText(editor);
-            setBounds(getX(), getY(), width, height);
-        }
+                JOptionPane.PLAIN_MESSAGE, null, null, item.getName());
+        if ((s != null))
+            item.updateText(editor, s);
     }
 
     // port calculation
@@ -127,9 +119,9 @@ public abstract class ItemBase extends JPanel {
      * @return int
      */
     public int getDragItemDirection(int x, int y) {
-        double a = (double) getHeight() / getWidth();
+        double a = (double) item.getHeight() / item.getWidth();
         boolean down = (y > (a * x));
-        boolean left = (y < (-a * x + getHeight()));
+        boolean left = (y < (-a * x + item.getHeight()));
         if (down && left)
             return 0; // left
         else if (down)
@@ -149,13 +141,13 @@ public abstract class ItemBase extends JPanel {
     public double getPortX(int port) {
         switch (port) {
         case 0:
-            return getX();
+            return item.getX();
         case 1:
-            return (int) (getX() + getWidth() / 2.0);
+            return (int) (item.getX() + item.getWidth() / 2.0);
         case 2:
-            return getX() + getWidth();
+            return item.getX() + item.getWidth();
         case 3:
-            return (int) (getX() + getWidth() / 2.0);
+            return (int) (item.getX() + item.getWidth() / 2.0);
         }
         return 0;
     }
@@ -169,13 +161,13 @@ public abstract class ItemBase extends JPanel {
     public int getPortY(int port) {
         switch (port) {
         case 0:
-            return (int) (getY() + getHeight() / 2.0);
+            return (int) (item.getY() + item.getHeight() / 2.0);
         case 1:
-            return getY() + getHeight();
+            return item.getY() + item.getHeight();
         case 2:
-            return (int) (getY() + getHeight() / 2);
+            return (int) (item.getY() + item.getHeight() / 2);
         case 3:
-            return getY();
+            return item.getY();
         }
         return 0;
     }
@@ -198,7 +190,7 @@ public abstract class ItemBase extends JPanel {
      * @return boolean
      */
     public boolean boundSelectContain(Rectangle box) {
-        return box.contains(getX(), getY(), getWidth(), getHeight());
+        return box.contains(item.getX(), item.getY(), item.getWidth(), item.getHeight());
     }
 
     /**
@@ -214,14 +206,14 @@ public abstract class ItemBase extends JPanel {
         }
     }
 
-    protected void updateCorner() {
+    private void updateCorner() {
         if (corners.size() < 4)
             return;
-        int layoutX = getX(), layoutY = getY();
-        setCorner(0, layoutX + (width - CORNER_SIZE) / 2, layoutY - CORNER_SIZE);
-        setCorner(1, layoutX + (width - CORNER_SIZE) / 2, layoutY + height);
-        setCorner(2, layoutX - CORNER_SIZE, layoutY + (height - CORNER_SIZE) / 2);
-        setCorner(3, layoutX + width, layoutY + (height - CORNER_SIZE) / 2);
+        int layoutX = item.getX(), layoutY = item.getY();
+        setCorner(0, layoutX + (item.getWidth() - CORNER_SIZE) / 2, layoutY - CORNER_SIZE);
+        setCorner(1, layoutX + (item.getWidth() - CORNER_SIZE) / 2, layoutY + item.getHeight());
+        setCorner(2, layoutX - CORNER_SIZE, layoutY + (item.getHeight() - CORNER_SIZE) / 2);
+        setCorner(3, layoutX + item.getWidth(), layoutY + (item.getHeight() - CORNER_SIZE) / 2);
     }
 
     /**
@@ -247,15 +239,18 @@ public abstract class ItemBase extends JPanel {
         int port = getDragItemDirection(x, y);
         JPanel p = new JPanel();
         p.setBackground(Color.black);
-        int layoutX = getX(), layoutY = getY();
+        int layoutX = item.getX(), layoutY = item.getY();
         if (port == 2)
-            p.setBounds(layoutX + width, layoutY + (height - CORNER_SIZE) / 2, CORNER_SIZE, CORNER_SIZE);
+            p.setBounds(layoutX + item.getWidth(), layoutY + (item.getHeight() - CORNER_SIZE) / 2, CORNER_SIZE,
+                    CORNER_SIZE);
         else if (port == 1)
-            p.setBounds(layoutX + (width - CORNER_SIZE) / 2, layoutY + height, CORNER_SIZE, CORNER_SIZE);
+            p.setBounds(layoutX + (item.getWidth() - CORNER_SIZE) / 2, layoutY + item.getHeight(), CORNER_SIZE,
+                    CORNER_SIZE);
         else if (port == 3)
-            p.setBounds(layoutX + (width - CORNER_SIZE) / 2, layoutY - CORNER_SIZE, CORNER_SIZE, CORNER_SIZE);
+            p.setBounds(layoutX + (item.getWidth() - CORNER_SIZE) / 2, layoutY - CORNER_SIZE, CORNER_SIZE, CORNER_SIZE);
         else
-            p.setBounds(layoutX - CORNER_SIZE, layoutY + (height - CORNER_SIZE) / 2, CORNER_SIZE, CORNER_SIZE);
+            p.setBounds(layoutX - CORNER_SIZE, layoutY + (item.getHeight() - CORNER_SIZE) / 2, CORNER_SIZE,
+                    CORNER_SIZE);
         corners.add(p);
         editor.addItemToCanvaTop(corners);
     }
@@ -302,8 +297,8 @@ public abstract class ItemBase extends JPanel {
 
     // handle drawing udpate
     public void setDragStart() {
-        startX = getX();
-        startY = getY();
+        startX = item.getX();
+        startY = item.getY();
     }
 
     /**
@@ -313,7 +308,8 @@ public abstract class ItemBase extends JPanel {
      * @param y
      */
     public void updatePos(int x, int y) {
-        setBounds(startX + x, startY + y, width, height);
-        repaint();
+        item.setBounds(startX + x, startY + y, item.getWidth(), item.getHeight());
+        item.repaint();
+        updateCorner();
     }
 }

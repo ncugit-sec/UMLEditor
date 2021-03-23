@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 import com.jcomp.UMLEditor;
 
 public class ItemGroup extends ItemBase {
-    private static final long serialVersionUID = 5289277990274009356L;
     protected ArrayList<ItemBase> item;
 
     public ItemGroup(UMLEditor editor, ArrayList<ItemBase> item) {
@@ -27,6 +26,13 @@ public class ItemGroup extends ItemBase {
     @Override
     public boolean isSelected() {
         return item.get(0).isSelected();
+    }
+
+    @Override
+    public void repaint() {
+        for (ItemBase p : item) {
+            p.repaint();
+        }
     }
 
     @Override
@@ -84,18 +90,6 @@ public class ItemGroup extends ItemBase {
             b.drawOnCanvas(g);
         }
     }
-
-    @Override
-    protected void drawItem(Graphics g) {
-        for (ItemBase b : item) {
-            b.drawItem(g);
-        }
-    }
-
-    @Override
-    public void _setText(UMLEditor editor) {
-        // function prohibit
-    };
 
     @Override
     public void updateText(UMLEditor editor) {

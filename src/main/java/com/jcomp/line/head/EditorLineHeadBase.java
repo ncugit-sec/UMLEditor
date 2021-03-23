@@ -24,7 +24,7 @@ public abstract class EditorLineHeadBase {
                 arrowUnit, topX, topY, downX, downY);
     }
 
-    public abstract void _drawHead(Graphics2D g2, double startX, double startY, double endX, double endY, double radianTop,
+    protected abstract void _drawHead(Graphics2D g2, double startX, double startY, double endX, double endY, double radianTop,
             double radianDown, double topSin, double topCos, double downSin, double downCos, double dist,
             double arrowUnit, double topX, double topY, double downX, double downY);
 }
