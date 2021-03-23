@@ -31,8 +31,10 @@ or use IDE
 [UML editor requirement V1](UML%20editor%20requirement%20V1%20-%20use%20case%20format.pdf)
 
 ## UML strcuture
+### V4.1
+![V4.1](src/main/java/com/jcomp/uml/modelV4.1.png)
 ### V4.0
-![V3.0](src/main/java/com/jcomp/uml/modelV4.png)
+![V4.0](src/main/java/com/jcomp/uml/modelV4.png)
 ### V3.0
 ![V3.0](src/main/java/com/jcomp/uml/modelV3.png)
 ### V2.1
@@ -40,6 +42,9 @@ or use IDE
 
 
 ## ChangeLog
+### V4.1
+* Seperate Item JPanel from ItemBase
+* Merge Item JPanel to Button Icon
 ### V4.0
 Change Implementation to Swing Framework
 ### V3.0

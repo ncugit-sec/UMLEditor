@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.jcomp</groupId>
   <artifactId>uml-editor</artifactId>
-  <version>4.0-Swing</version>
+  <version>4.1-Swing</version>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
