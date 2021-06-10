@@ -6,10 +6,10 @@ import com.jcomp.item.shape.ItemShapeBase;
 
 import java.awt.event.MouseEvent;
 
-public class EditorModeSelectItem extends EditorModeBaseItem {
+public class EditorModeSelectItem extends EditorModeBase {
     @Override
     public void handleMousePressed(MouseEvent e, UMLEditor editor) {
-        ItemBase b = ((ItemBase)((ItemShapeBase) e.getSource()).getClientProperty("parent")).getItemParent();
+        ItemBase b = ((ItemShapeBase) e.getSource()).getRoot().getParent();
         dragStartX = e.getXOnScreen();
         dragStartY = e.getYOnScreen();
         editor.clearSelect(b);
@@ -19,7 +19,7 @@ public class EditorModeSelectItem extends EditorModeBaseItem {
 
     @Override
     public void handleMouseDragging(MouseEvent e, UMLEditor editor) {
-        ItemBase b = ((ItemBase)((ItemShapeBase) e.getSource()).getClientProperty("parent")).getItemParent();
+        ItemBase b = ((ItemShapeBase) e.getSource()).getRoot().getParent();
         b.updatePos(e.getXOnScreen() - dragStartX, e.getYOnScreen() - dragStartY);
         editor.canvasRepaint();
         e.consume();

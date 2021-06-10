@@ -16,6 +16,31 @@ public class ItemGroup extends ItemBase {
         }
     }
 
+
+
+    // port
+    @Override
+    public void removeCorner(UMLEditor editor) {
+        for (ItemBase b : item)
+            b.removeCorner(editor);
+    }
+
+    @Override
+    public void showCorner(UMLEditor editor, int x, int y) {
+        removeCorner(editor);
+        for (ItemBase b : item)
+            b.showCorner(editor, x, y);
+    }
+
+    public void showCorner(UMLEditor editor) {
+        removeCorner(editor);
+        for (ItemBase b : item)
+            b.showCorner(editor);
+    }
+
+    
+    // group
+    
     @Override
     public void setParent(ItemBase parent) {
         for (ItemBase p : item) {
@@ -24,41 +49,8 @@ public class ItemGroup extends ItemBase {
     }
 
     @Override
-    public boolean isSelected() {
-        return item.get(0).isSelected();
-    }
-
-    @Override
-    public void repaint() {
-        for (ItemBase p : item) {
-            p.repaint();
-        }
-    }
-
-    @Override
-    public boolean boundSelectContain(Rectangle box) {
-        for (ItemBase b : item) {
-            if (!b.boundSelectContain(box))
-                return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void addCorner(UMLEditor editor) {
-        for (ItemBase b : item)
-            b.addCorner(editor);
-    }
-
-    @Override
-    public void removeCorner(UMLEditor editor) {
-        for (ItemBase b : item)
-            b.removeCorner(editor);
-    }
-
-    @Override
-    public boolean isGroup() {
-        return true;
+    public ItemBase getParent() {
+        return parent;
     }
 
     @Override
@@ -70,6 +62,41 @@ public class ItemGroup extends ItemBase {
         }
     }
 
+    @Override
+    public boolean isGroup() {
+        return true;
+    }
+
+    // selection
+
+    @Override
+    public boolean isSelected() {
+        return isSelect;
+    }
+  
+    @Override
+    public void setSelect(boolean isSelect) {
+        this.isSelect = isSelect;
+    }
+
+    @Override
+    public boolean boundSelectContain(Rectangle box) {
+        for (ItemBase b : item) {
+            if (!b.boundSelectContain(box))
+                return false;
+        }
+        return true;
+    }
+
+    // handle drawing udpate
+    @Override
+    public void drawOnCanvas(Graphics g) {
+        for (ItemBase b : item) {
+            b.drawOnCanvas(g);
+        }
+    }
+  
+    
     @Override
     public void setDragStart() {
         for (ItemBase b : item) {
@@ -83,11 +110,11 @@ public class ItemGroup extends ItemBase {
             b.updatePos(x, y);
         }
     }
-
+  
     @Override
-    public void drawOnCanvas(Graphics g) {
-        for (ItemBase b : item) {
-            b.drawOnCanvas(g);
+    public void repaint() {
+        for (ItemBase p : item) {
+            p.repaint();
         }
     }
 

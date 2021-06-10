@@ -18,6 +18,10 @@ public class ItemShapeClass extends ItemShapeBase {
         super(editor, x, y, width, height); // stackHeight * 2
         stackHeight = height / 3;
     }
+    public ItemShapeClass(int x, int y, int width, int height) {
+        super(null, x, y, width, height); // stackHeight * 2
+        stackHeight = height / 3;
+    }
 
     @Override
     public void paintComponent(Graphics g) {

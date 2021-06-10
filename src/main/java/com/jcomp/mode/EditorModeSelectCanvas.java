@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import com.jcomp.UMLEditor;
 
-public class EditorModeSelectCanvas extends EditorModeBaseCanvas {
+public class EditorModeSelectCanvas extends EditorModeBase {
     private JPanel dragRect = new JPanel();
 
     public EditorModeSelectCanvas() {

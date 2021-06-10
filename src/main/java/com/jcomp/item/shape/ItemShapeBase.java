@@ -3,9 +3,10 @@ package com.jcomp.item.shape;
 import javax.swing.JPanel;
 
 import com.jcomp.UMLEditor;
+import com.jcomp.item.ItemBase;
 
 public abstract class ItemShapeBase extends JPanel {
-    private static final long serialVersionUID = -5944192777275476410L;
+    private ItemBase itemRoot;
     protected String name = "";
     protected int minWidth;
     protected int minHeight;
@@ -17,6 +18,14 @@ public abstract class ItemShapeBase extends JPanel {
         this.minHeight = minHeight;
         setBounds(x, y, minWidth, minHeight);
         setOpaque(false);
+    }
+
+    public void setRoot(ItemBase itemRoot) {
+        this.itemRoot = itemRoot;
+    }
+
+    public ItemBase getRoot() {
+        return itemRoot;
     }
 
     public void updateText(UMLEditor editor, String s) {

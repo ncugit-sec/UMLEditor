@@ -9,6 +9,11 @@ import java.awt.Graphics;
 public class ItemShapeUseCase extends ItemShapeBase {
     private static final long serialVersionUID = 1009464545721069900L;
 
+    public ItemShapeUseCase(int x, int y, int width, int height) {
+        super(null, x, y, width, height); // stackHeight * 2
+        diffY = y;
+    }
+
     public ItemShapeUseCase(UMLEditor editor, int x, int y) {
         super(editor, x, y, 80, 40);
     }

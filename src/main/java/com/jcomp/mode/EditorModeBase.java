@@ -6,10 +6,6 @@ import java.awt.event.MouseEvent;
 import java.awt.Graphics;
 
 public class EditorModeBase {
-    public int getTargetType() {
-        return -1;
-    }
-
     public void handleMousePressed(MouseEvent e, UMLEditor editor) {
         return;
     }
@@ -40,10 +36,5 @@ public class EditorModeBase {
 
     public void drawOnCanvas(Graphics g) {
         
-    }
-
-    public final static class EditorModeTargetType {
-        public static final int CANVAS = 0;
-        public static final int Item = 1;
     }
 }
